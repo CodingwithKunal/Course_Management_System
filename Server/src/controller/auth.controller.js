@@ -1,11 +1,9 @@
-import { configDotenv } from "dotenv";
-configDotenv();
 
 import UserModel from "../models/user.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
-import cookie from "cookie-parser";
+
 
 
 
@@ -91,6 +89,11 @@ export const login = async (req, res) => {
             return res.status(403).json({ message: "Your account is blocked. Please contact support." });
         }
 
+        // check if instructor is approved
+        if (user.role === "INSTRUCTOR" && !user.instructor.isApproved) {
+            return res.status(403).json({ message: "Your instructor account is pending approval. Please wait for admin approval." });
+        }
+
         // check if password is correct
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
@@ -126,7 +129,7 @@ export const forgotPassword = async (req, res) => {
         await user.save();
 
         res.status(200).json({ message: "Reset password link sent", 
-            resetToken  // remove in production, only for testing
+            // resetToken  // remove in production, only for testing
         });
         
     } catch (error) {
@@ -172,6 +175,7 @@ export const logout = async (req, res) => {
        res.cookie("token", "", {
         httpOnly: true,
         expires: new Date(0), // set cookie to expire immediately
+        sameSite: "Strict", 
        })
          res.status(200).json({ message: "Logout successful" });
 }
