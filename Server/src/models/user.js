@@ -8,9 +8,9 @@ const userchema = new mongoose.Schema({
     isBlocked: { type: Boolean, default: false },
     isSuperAdmin: { type: Boolean, default: false },
     instructor: {
-        bio: { type: String },
-        expertise: { type: String },
-        experience: { type: String },
+        bio: { type: String , default: "Not bio" },
+        expertise: { type: String , default: "Not specified" },
+        experience: { type: String , default: "Not specified" },
         isApproved: { type: Boolean, default: false },
     },
 
