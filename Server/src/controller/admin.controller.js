@@ -104,6 +104,7 @@ export const promoteToAdmin = async (req, res) => {
             return res.status(400).json({ message: "User is already an admin" });
         }
         user.role = "ADMIN";
+        user.instructor = undefined; // Remove instructor details if any
         await user.save();
         res.status(200).json({ message: "User promoted to admin successfully", user });
         
