@@ -75,6 +75,7 @@ export const registerInstructor = async (req, res) => {
     }}
 
 
+
 export const login = async (req, res) => {
     const { email, password } = req.body;
     try {
@@ -106,9 +107,12 @@ export const login = async (req, res) => {
         res.status(200).json({ message: "Login successful", user, token });
         
     } catch (error) {
+        
         res.status(500).json({ message: "Server error", error: error.message });
     }
 }
+
+
 
 export const forgotPassword = async (req, res) => {
     const { email } = req.body;
@@ -136,6 +140,8 @@ export const forgotPassword = async (req, res) => {
        res.status(500).json({ message: "Server error", error: error.message }); 
     }
 }
+
+
 
 export const resetPassword = async (req, res) => {
         const {resetToken} = req.params; // get reset token from url params
@@ -170,6 +176,8 @@ export const resetPassword = async (req, res) => {
             res.status(500).json({ message: "Server error", error: error.message });
         }
 }
+
+
 
 export const logout = async (req, res) => {
        res.cookie("token", "", {
