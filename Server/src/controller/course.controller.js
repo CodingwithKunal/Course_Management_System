@@ -8,7 +8,7 @@ export const creatCourse = async (req, res) => {
         if (!title || !description || !category) {
             return res.status(400).json({ message: "Title, description, and category are required" });
         } 
-        const course = await new CourseModel.create({
+        const course = await CourseModel.create({
             title,
             description,
             price,
@@ -79,7 +79,9 @@ export const UpdateCourse = async (req, res) => {
 export const deleteCourse = async (req, res) => {
     try {
         const { courseId } = req.params;
-        const course = await CourseModel.deleteOne( courseId)
+        
+        const course = await CourseModel.findById( courseId)
+        const deletedCourse = await CourseModel.deleteOne({ _id: courseId });
         if(!course) {
             return res.status(404).json({ message: "Course not found" });
         }
@@ -92,7 +94,7 @@ export const deleteCourse = async (req, res) => {
         
         
 
-        res.status(200).json({ message: "Course deleted successfully" });
+        res.status(200).json({ message: "Course deleted successfully" }, deletedCourse);
     } catch (error) {
         res.status(500).json({ message: "Server Error", error: error.message });
     }
