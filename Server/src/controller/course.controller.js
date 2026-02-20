@@ -99,3 +99,21 @@ export const deleteCourse = async (req, res) => {
         res.status(500).json({ message: "Server Error", error: error.message });
     }
 }
+
+
+
+export const publishCourse = async (req, res) => {
+    try {
+        const courses = await CourseModel.find({
+            isPublished: true,
+        }).populate("instructor", "name email") // // show instructor basic info
+        .sort({ createdAt: -1 }); // show latest courses first
+
+        res.status(200).json({ message: "Published courses fetched successfully", count: courses.length, courses });
+
+        
+    } catch (error) {
+        res.status(500).json({ message: "Server Error", error: error.message });
+    }
+}
+
