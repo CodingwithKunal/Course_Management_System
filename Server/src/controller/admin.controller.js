@@ -1,17 +1,6 @@
-// ADMIN Powers:
-
-// Get all users
-
-// Approve instructor
-
-// Block / Unblock user
-
-// Delete user
-
-// Promote user to ADMIN (only SuperAdmin ideally)
-
 
 import UserModel from "../models/user.js";
+import CourseModel from "../models/course.js";
 
 
 //Purpose: Admin dashboard me user list show karna.
@@ -112,4 +101,97 @@ export const promoteToAdmin = async (req, res) => {
       res.status(500).json({ message: "Server error", error: error.message });  
     }
 }
+
+
+
+// Purpose: Aproved instructor course as a published  
+export const publishCourse = async (req, res) => {
+    try {
+        const { courseId } = req.params; // Take URL parameter for course ID
+        const course = await CourseModel.findById(courseId);
+        if (!course) {
+            return res.status(404).json({ message: "Course not found" });
+        }
+        if(course.status === "PUBLISHED") {
+            return res.status(400).json({ message: "Course is already published" });
+        }
+        
+        course.status = "PUBLISHED";
+        await course.save();
+        res.status(200).json({ message: "Course published successfully", course });
+        
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error: error.message });
+    }
+}
+
+
+
+export const rejectCourse = async (req, res) => {
+    try {
+        const { courseId } = req.params; 
+        const { reason } = req.body; // Take rejection reason from request body
+        const course = await CourseModel.findById(courseId);
+        if (!course) {
+            return res.status(404).json({ message: "Course not found" });
+        }
+        if(course.status === "REJECTED") {
+            return res.status(400).json({ message: "Course is already rejected" });
+        }
+
+        course.status = "REJECTED";
+        course.rejectionReason = reason || "No reason provided"; // Set rejection reason
+        await course.save();
+
+        res.status(200).json({ message: "Course rejected successfully", course });
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error: error.message });
+    }
+}
+
+
+export const unpublishCourse = async (req, res) => {
+    try {
+        const { courseId } = req.params; // Take URL parameter for course ID
+        const course = await CourseModel.findById(courseId);
+        if (!course) {
+            return res.status(404).json({ message: "Course not found" });
+        }
+        if(course.status !== "PUBLISHED") {
+            return res.status(400).json({ message: "Only published courses can be unpublished" });
+        }
+        
+        course.status = "DRAFT";
+        await course.save();
+
+        res.status(200).json({ message: "Course unpublished successfully", course });
+        
+    } catch (error) {
+         res.status(500).json({ message: "Server error", error: error.message });       
+    }
+}
+
+
+
+
+// Purpose: Check Pending courses whether they are published or not 
+export const getPendingCourses  = async (req, res) => {
+    try {
+        const pendingCourses = await CourseModel.find({ status: "PENDING"}).populate("instructor", "name email");
+        if (!pendingCourses || pendingCourses.length === 0) {
+            return res.status(404).json({ message: "No pending courses found" });
+        }
+        res.status(200).json({ 
+            count: pendingCourses.length,
+            pendingCourses 
+        });
+        
+    } catch (error) {
+        res.status(500).json({ message: "Server error", error: error.message });
+        
+    }
+}
+
+
+
 
