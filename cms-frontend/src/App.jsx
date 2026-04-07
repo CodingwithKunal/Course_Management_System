@@ -1,10 +1,9 @@
-import React from 'react'
+
+import AppRoutes from './routes/AppRoutes'
 
 const App = () => {
   return (
-    <section>
-      <h1>CMS:Content Management System....</h1>
-    </section>
+    <AppRoutes/>
   )
 }
 
