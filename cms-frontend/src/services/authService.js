@@ -1,5 +1,5 @@
 import API from "./api";
-import { toast } from "react-hot-toast";
+import { toast } from "sonner";
 
 export const loginUser = async (data) => {
     try {
