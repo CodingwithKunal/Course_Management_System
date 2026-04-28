@@ -5,6 +5,7 @@ import Register from "../pages/auth/Register"
 import PublicLayout from "../components/layouts/PublicLayout"
 import RegisterInstructor from "../pages/auth/RegisterInstructor"
 import ProtectedRoute from "./ProtectedRoute"
+import Courses from "../pages/public/Courses"
 
 function AppRoutes() {
    return (
@@ -12,6 +13,7 @@ function AppRoutes() {
          <Routes>
             <Route element={<PublicLayout />}>
                <Route path="/" element={<Home />} />
+               <Route path="/courses" element={<Courses/>}/>
             </Route>
 
 
