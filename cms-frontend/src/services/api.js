@@ -19,7 +19,7 @@ const API = axios.create({
     const status = err.response ? err.response.status : null;
     if(status === 401) {
         localStorage.removeItem("token");
-        toast.error("Session expired. Please log in again.");
+        toast.error("Session expired. Please login again.");
         window.location.href = "/login";
     }
     if(status === 403) {
