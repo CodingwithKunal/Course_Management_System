@@ -1,5 +1,6 @@
 import React from 'react'
 import { useCourses } from '../../hooks/useCourses.js'
+import { Link } from 'react-router';
 
 function Courses() {
 
@@ -17,7 +18,7 @@ function Courses() {
                     onChange={(e)=>setfilters({...filters, search: e.target.value})}
                  />
             </div>
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-5'>
+            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-5 '>
                 {courses.map((course , key)=>(
                     <div  key={key} className='border p-4 rounded-md shadow-sm'>
                         <h2 className='text-lg font-semibold'>{course.title}</h2>
@@ -25,6 +26,11 @@ function Courses() {
                         <p className='text-sm text-gray-500'>Category: {course.category}</p>
                         <p className='text-sm text-gray-500'>Level: {course.level}</p>
                         <p className='text-sm text-gray-500'>Instructor: {course.instructor?.name}</p>
+                        <div className=' flex items-center justify-center'>
+                           
+                            <Link to={`/courses/${course._id}`} className='py-2 px-3 border border-white rounded-2xl text-center mt-4 cursor-pointer '>Get Course Details</Link>
+                        </div>
+                        
                     </div>
                 ))}
             </div>
