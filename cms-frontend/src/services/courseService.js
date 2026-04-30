@@ -41,6 +41,7 @@ export const enrollInCourse = async (courseId) => {
         
     } catch (error) {
         toast.error(error.response?.data?.message || "Failed to enroll in course")
+        return { ok: false}
     }
 }
 
