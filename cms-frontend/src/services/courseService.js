@@ -32,3 +32,15 @@ export const getCourseDetails = async (coureseId) => {
     }
 }
 
+
+export const enrollInCourse = async (courseId) => {
+    try {
+        const res = await API.post(`/course/enroll/${courseId}`) 
+        toast.success(res.data.message)
+        return {ok: true, data: res.data}
+        
+    } catch (error) {
+        toast.error(error.response?.data?.message || "Failed to enroll in course")
+    }
+}
+
