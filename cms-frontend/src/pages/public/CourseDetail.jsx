@@ -33,7 +33,7 @@ function CourseDetail() {
             <p>Instructor: {course.instructor.name}</p>
             <p>Level: {course.level}</p>
             <p>Category: {course.category}</p>
-            <p>Price: ${course.price}</p>
+            <p>Price: ₹{course.price}</p>
 
             <button onClick={handle_Enroll} className='border border-white rounded-2xl cursor-pointer py-2 active:bg-amber-300'>{ course.price === 0 ? "Enroll Now" : "Buy Now" } </button>
 
