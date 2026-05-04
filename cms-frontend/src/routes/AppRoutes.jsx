@@ -7,6 +7,7 @@ import RegisterInstructor from "../pages/auth/RegisterInstructor"
 import ProtectedRoute from "./ProtectedRoute"
 import Courses from "../pages/public/Courses"
 import CourseDetail from "../pages/public/CourseDetail"
+import Checkout from "../pages/student/Checkout"
 
 function AppRoutes() {
    return (
@@ -17,6 +18,8 @@ function AppRoutes() {
                <Route path="/courses" element={<Courses/>}/>
                <Route path="/courses/:id" element={<CourseDetail/>}/>
             </Route>
+
+            <Route path="/checkout/:courseId" element={<Checkout/>}/>
 
 
             <Route path="/login" element={<Login />} />
