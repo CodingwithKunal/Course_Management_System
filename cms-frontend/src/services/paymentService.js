@@ -19,20 +19,22 @@ export const createPaymentIntent = async (courseId) => {
 export const waitForEnrollment = async (courseId) =>{
     try {
 
-        for (let i = 0; i<=5; i++){
+        for (let i = 0; i<15; i++){
             const res = await API.get("/course/my-enrollments") 
             const isEnrolled = res.data.enrollments.find(enrollments => enrollments.course._id === courseId)
             if (isEnrolled) {
                 toast.success("Enrollment confirmed, you can access the course now")
                 return { ok: true}
             } else {
-                await new Promise(resolve => setTimeout(resolve, 1000))
+                await new Promise(resolve => setTimeout(resolve, 1500))
             }
         }
-        toast.error("Enrollment not confirmed yet, please check again later")
+        toast.error("Enrollment delayed. Please refresh.")
         return { ok: false} 
     } catch (error) {
         toast.error(error.response?.data?.message || "Failed to check enrollment status")
         return { ok: false}
     }
 }
+
+
