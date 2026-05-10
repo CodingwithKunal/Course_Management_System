@@ -2,17 +2,23 @@ import React from 'react'
 import { useCourseDetail } from '../../hooks/useCourseDetail.js'
 import { useNavigate, useParams } from 'react-router-dom'
 import { enrollInCourse } from '../../services/courseService.js'
+import { useSelector } from 'react-redux'
 
 function CourseDetail() {
 
     const { id } = useParams()
-    const Nevigate = useNavigate()
+    const Navigate = useNavigate()
+    const { isAuthenticated } = useSelector(state => state.auth)
 
-    const { course, isLoading, error } = useCourseDetail(id)
+    const { course, isLoading, error, isEnrolled, enrollmentLoading } = useCourseDetail(id)
+
+
+
 
     if (isLoading) { return <div>Loading...</div>; }
     if (error) { return <div>Error loading course details.</div>; }
     if (!course) { return <div>Course not found.</div>; }
+    if (enrollmentLoading) { return <div>Checking enrollment status...</div>; }
 
 
 
@@ -22,14 +28,52 @@ function CourseDetail() {
         if (course.price === 0) {
             const res = await enrollInCourse(course._id)
 
-            if (res.ok) Nevigate(`/`)
+            if (res.ok) {
+                // Redirect to the learn page with correct URL
+                Navigate(`/course/${course._id}/learn`)
+            }
 
         } else {
-            Nevigate(`/checkout/${course._id}`)
+            Navigate(`/checkout/${course._id}`)
         }
 
     }
 
+    const renderEnrollButton = () => {
+        // If not authenticated, show login prompt
+        if (!isAuthenticated) {
+            return (
+                <button 
+                    onClick={() => Navigate('/login')}
+                    className='border border-white rounded-2xl cursor-pointer py-2 px-4 active:bg-amber-300 hover:bg-blue-500 transition'
+                >
+                    Login to Enroll
+                </button>
+            )
+        }
+
+        // If already enrolled, show enrolled status
+        if (isEnrolled) {
+            return (
+                <button 
+                   onClick={()=>Navigate(`/course/${course._id}/learn`)}
+                    className='border border-green-500 bg-green-100 text-green-700 rounded-2xl cursor-pointer  py-2 px-4'
+                >
+                    ✓ You are Enrolled
+                </button>
+            )
+        }
+
+        // If not enrolled, show enroll/buy button
+        return (
+            <button 
+                onClick={handle_Enroll} 
+                className='border border-white rounded-2xl cursor-pointer py-2 px-4 active:bg-amber-300 hover:bg-blue-500 transition'
+            >
+                {course.price === 0 ? "Enroll Now" : "Buy Now"}
+            </button>
+        )
+    }
 
 
 
@@ -43,7 +87,7 @@ function CourseDetail() {
             <p>Category: {course.category}</p>
             <p>Price: ₹{course.price}</p>
 
-            <button onClick={handle_Enroll} className='border border-white rounded-2xl cursor-pointer py-2 active:bg-amber-300'>{course.price === 0 ? "Enroll Now" : "Buy Now"} </button>
+            {renderEnrollButton()}
 
         </div>
     )
