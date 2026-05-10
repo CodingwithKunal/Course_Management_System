@@ -8,6 +8,7 @@ import ProtectedRoute from "./ProtectedRoute"
 import Courses from "../pages/public/Courses"
 import CourseDetail from "../pages/public/CourseDetail"
 import Checkout from "../pages/student/Checkout"
+import CourseLearn from "../pages/student/CourseLearn"
 
 function AppRoutes() {
    return (
@@ -17,6 +18,12 @@ function AppRoutes() {
                <Route path="/" element={<Home />} />
                <Route path="/courses" element={<Courses/>}/>
                <Route path="/courses/:id" element={<CourseDetail/>}/>
+               
+               <Route path="/course/:id/learn" element = { 
+                  <ProtectedRoute allowedRoles={["USER"]}>
+                     <CourseLearn/>
+                  </ProtectedRoute>
+               }/>
             </Route>
 
             <Route path="/checkout/:courseId" element={<Checkout/>}/>
