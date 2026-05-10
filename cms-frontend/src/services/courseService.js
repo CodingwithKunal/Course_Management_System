@@ -45,3 +45,16 @@ export const enrollInCourse = async (courseId) => {
     }
 }
 
+
+// Check if user is enrolled in a course
+export const checkCourseEnrollment = async (courseId) => {
+    try {
+        const res = await API.get(`/course/check-enrollment/${courseId}`)
+        return { ok: true, isEnrolled: res.data.isEnrolled }
+        
+    } catch (error) {
+        console.error("Error checking enrollment:", error.response?.data?.message || error.message)
+        return { ok: false, isEnrolled: false }
+    }
+}
+
