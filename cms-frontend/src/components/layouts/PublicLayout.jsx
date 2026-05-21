@@ -1,13 +1,21 @@
-
+import Footer from '../common/Footer';
+import Navbar from '../common/Navbar';
 import { Outlet } from 'react-router-dom';
 
 function PublicLayout() {
   return (
-    <div>
-      <h2>Navbar</h2>
+    <>
+      <Navbar />
+
+      <main className='min-h-screen py-10'>
         <Outlet />
-      <h3>Footer</h3>
-    </div>
+      </main>
+
+      <Footer />
+
+    </>
+
+
   )
 }
 
