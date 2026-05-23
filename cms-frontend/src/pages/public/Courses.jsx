@@ -10,7 +10,7 @@ function Courses() {
     if (isError) return <p>Error loading courses.</p>
 
     return (
-        <main>
+        <main className='container mx-auto px-5'>
             <h1 className=' text-center font-extrabold text-2xl text-blue-500'>Courses</h1>
             <div className= "flex items-start justify-center mt-5" >
                  <input type="text" placeholder='Search courses...' className='p-2 border border-gray-300 rounded-md w-1/2'
