@@ -21,6 +21,7 @@ function Login() {
   }
   return (
     <main className=" flex items-center justify-center   h-screen">
+     <button onClick={()=>nevigate("/")} className="absolute top-5 left-5 text-gray-400 hover:text-gray-200 cursor-pointer">Back to Home</button>
       <div className="w-full max-w-md p-8 space-y-6 bg-gray-800 rounded-lg">
         <h2 className="text-2xl font-bold text-center">Login to Your Account</h2>
 
