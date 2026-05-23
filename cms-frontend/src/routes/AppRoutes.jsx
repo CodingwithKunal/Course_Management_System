@@ -9,6 +9,7 @@ import Courses from "../pages/public/Courses"
 import CourseDetail from "../pages/public/CourseDetail"
 import Checkout from "../pages/student/Checkout"
 import CourseLearn from "../pages/student/CourseLearn"
+import Dashboard from "../pages/student/Dashboard"
 
 function AppRoutes() {
    return (
@@ -16,17 +17,18 @@ function AppRoutes() {
          <Routes>
             <Route element={<PublicLayout />}>
                <Route path="/" element={<Home />} />
-               <Route path="/courses" element={<Courses/>}/>
-               <Route path="/courses/:id" element={<CourseDetail/>}/>
-               
-               <Route path="/course/:id/learn" element = { 
+               <Route path="/courses" element={<Courses />} />
+               <Route path="/courses/:id" element={<CourseDetail />} />
+
+               <Route path="/course/:id/learn" element={
                   <ProtectedRoute allowedRoles={["USER"]}>
-                     <CourseLearn/>
+                     <CourseLearn />
                   </ProtectedRoute>
-               }/>
+               } />
+               
             </Route>
 
-            <Route path="/checkout/:courseId" element={<Checkout/>}/>
+            <Route path="/checkout/:courseId" element={<Checkout />} />
 
 
             <Route path="/login" element={<Login />} />
@@ -37,7 +39,7 @@ function AppRoutes() {
 
             <Route path="/dashboard" element={
                <ProtectedRoute allowedRoles={["USER"]}>
-                  <h1> User Dashboard</h1>
+                  <Dashboard/>
                </ProtectedRoute>
             }
             />
