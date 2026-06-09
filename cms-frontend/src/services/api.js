@@ -1,5 +1,5 @@
 import axios from "axios";
-import toast from "react-hot-toast";
+import { toast } from "sonner";
 
 const API = axios.create({
     baseURL: import.meta.env.VIT_Backend_URL || "http://localhost:5000/api",
