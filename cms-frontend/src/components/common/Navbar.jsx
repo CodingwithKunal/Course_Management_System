@@ -29,7 +29,7 @@ function Navbar() {
                 ) }
 
                 { user.role === "INSTRUCTOR" && (
-                    <Link to= "/instructor" className="text-lg" > Instructor </Link>
+                    <Link to= "/instructor/dashboard" className="text-lg" > Instructor </Link>
                 )}
 
                 { user.role === "ADMIN" && (
