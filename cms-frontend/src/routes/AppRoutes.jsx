@@ -10,6 +10,8 @@ import CourseDetail from "../pages/public/CourseDetail"
 import Checkout from "../pages/student/Checkout"
 import CourseLearn from "../pages/student/CourseLearn"
 import Dashboard from "../pages/student/Dashboard"
+import InstructorDashboard from "../pages/instructor/InstructorDashboard"
+import CreateCourse from "../pages/instructor/CreateCourse"
 
 function AppRoutes() {
    return (
@@ -44,11 +46,17 @@ function AppRoutes() {
             }
             />
 
-            <Route path="/instructor" element={
+            <Route path="/instructor/dashboard" element={
                <ProtectedRoute allowedRoles={["INSTRUCTOR"]}>
-                  <h1>Instructor Dashboard</h1>
+                  <InstructorDashboard/>
                </ProtectedRoute>
             } />
+
+            <Route path="/instructor/create-course" element={
+               <ProtectedRoute allowedRoles={["INSTRUCTOR"]}>
+                  <CreateCourse/>
+               </ProtectedRoute>
+            }/>
 
             <Route path="/admin" element={
                <ProtectedRoute allowedRoles={["ADMIN"]}>
