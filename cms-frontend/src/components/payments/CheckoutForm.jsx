@@ -2,11 +2,13 @@ import { useStripe, useElements, PaymentElement } from "@stripe/react-stripe-js"
 import { useState } from "react";
 import { waitForEnrollment } from "../../services/paymentService.js";
 import { useNavigate } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 
 function CheckoutForm({courseId}) {
     const stripe = useStripe();
     const elements = useElements();
     const navigate = useNavigate(); 
+    const queryClient = useQueryClient();
 
     const [loading, setloading] = useState(false);
 
@@ -24,6 +26,9 @@ function CheckoutForm({courseId}) {
            }
 
            await waitForEnrollment(courseId) 
+            queryClient.setQueryData(["enrollment-status", courseId], { ok: true, isEnrolled: true })
+            queryClient.invalidateQueries({ queryKey: ["my-enrollments"] })
+            queryClient.invalidateQueries({ queryKey: ["course-detail", courseId] })
 
            navigate(`/`);
     };
