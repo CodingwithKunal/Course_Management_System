@@ -12,6 +12,7 @@ import CourseLearn from "../pages/student/CourseLearn"
 import Dashboard from "../pages/student/Dashboard"
 import InstructorDashboard from "../pages/instructor/InstructorDashboard"
 import CreateCourse from "../pages/instructor/CreateCourse"
+import AdminDashboard from "../pages/admin/AdminDashboard"
 
 function AppRoutes() {
    return (
@@ -23,7 +24,7 @@ function AppRoutes() {
                <Route path="/courses/:id" element={<CourseDetail />} />
 
                <Route path="/course/:id/learn" element={
-                  <ProtectedRoute allowedRoles={["USER"]}>
+                  <ProtectedRoute allowedRoles={["USER",]}>
                      <CourseLearn />
                   </ProtectedRoute>
                } />
@@ -60,7 +61,7 @@ function AppRoutes() {
 
             <Route path="/admin" element={
                <ProtectedRoute allowedRoles={["ADMIN"]}>
-                  <h1>Admin Dashboard</h1>
+                 <AdminDashboard/>
                </ProtectedRoute>
             } />
 
