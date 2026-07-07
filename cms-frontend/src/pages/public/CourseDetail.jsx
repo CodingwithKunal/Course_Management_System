@@ -3,15 +3,27 @@ import { useCourseDetail } from '../../hooks/useCourseDetail.js'
 import { useNavigate, useParams } from 'react-router-dom'
 import { enrollInCourse } from '../../services/courseService.js'
 import { useSelector } from 'react-redux'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 function CourseDetail() {
 
     const { id } = useParams()
     const Navigate = useNavigate()
     const { isAuthenticated } = useSelector(state => state.auth)
+    const queryClient = useQueryClient()
+
+    const mutation = useMutation({
+        mutationFn: enrollInCourse,
+        onSuccess : () =>{
+             queryClient.setQueryData(["enrollment-status", id], { ok: true, isEnrolled: true })
+             queryClient.invalidateQueries({ queryKey:['my-enrollments'] })
+             queryClient.invalidateQueries({ queryKey:['course-detail', id]})
+             Navigate(`/course/${course._id}/learn`)
+        }
+    })
 
     const { course, isLoading, error, isEnrolled, enrollmentLoading } = useCourseDetail(id)
-
+    
 
 
 
@@ -24,15 +36,16 @@ function CourseDetail() {
 
 
     const handle_Enroll = async () => {
+     
+        if(!isAuthenticated){
+            return Navigate('/login')
+        }
+       
 
         if (course.price === 0) {
-            const res = await enrollInCourse(course._id)
-
-            if (res.ok) {
-                // Redirect to the learn page with correct URL
-                Navigate(`/course/${course._id}/learn`)
-            }
-
+           
+                mutation.mutate(course._id)
+           
         } else {
             Navigate(`/checkout/${course._id}`)
         }
@@ -69,8 +82,9 @@ function CourseDetail() {
             <button 
                 onClick={handle_Enroll} 
                 className='border border-white rounded-2xl cursor-pointer py-2 px-4 active:bg-amber-300 hover:bg-blue-500 transition'
+                disabled={mutation.isPending}
             >
-                {course.price === 0 ? "Enroll Now" : "Buy Now"}
+                {mutation.isPending ? "Enrolling..." : course.price === 0 || "" ? "Enroll Now (Free)" : "Buy Now"}
             </button>
         )
     }
