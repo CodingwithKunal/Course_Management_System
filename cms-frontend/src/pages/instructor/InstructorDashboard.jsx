@@ -4,19 +4,31 @@ import { useState } from "react"
 import EmptyState from "../../components/common/EmptyState.jsx"
 import StatusBadge from "../../components/common/StatusBadge.jsx"
 import { submitCourseForReview } from "../../services/instructorService.js"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+
 
 const InstructorDashboard = () => {
-    const { courses, error, isLoading, refetch } = useInstructorCourse()
+    const { courses, error, isLoading } = useInstructorCourse()
     const navigate = useNavigate()
-    const [submitting, setSubmitting] = useState(null)
+    const [submitting, setsubmitting] = useState(null)
 
-    const handleSubmitCourse = async (courseId) => {
-        setSubmitting(courseId)
-        const res = await submitCourseForReview(courseId)
-        setSubmitting(null)
-        if (res.ok) {
-            refetch()
+    const queryClient = useQueryClient()
+    const mutation = useMutation({
+        mutationFn: submitCourseForReview,
+        onSuccess:()=>{
+            // Refresh the course list automatically
+           queryClient.invalidateQueries({ queryKey: ["getInstructor_course"] })
+        },
+        onSettled: () => {
+            // CRITICAL FIX: Resets loading state only AFTER the network call finishes completely
+            setsubmitting(null)
         }
+        
+    })
+    const handleSubmitCourse = async (courseId) => {
+         setsubmitting(courseId)   // Lock the loading state to this specific course ID
+         mutation.mutate(courseId) // Fire the asynchronous React Query mutation
+        
     }
 
     if (isLoading) return <p className="text-center py-10">Loading...</p>
@@ -88,6 +100,15 @@ const InstructorDashboard = () => {
                                         >
                                             {submitting === course._id ? "Submitting..." : "Submit"}
                                         </button>
+                                    )}
+
+                                    { course.status === "PENDING" && (
+                                       <button 
+                                         className="px-3 py-1 text-sm bg-green-600  text-white rounded-md "
+                                          disabled
+                                       >
+                                        Submited
+                                       </button>
                                     )}
                                 </div>
                             </div>
