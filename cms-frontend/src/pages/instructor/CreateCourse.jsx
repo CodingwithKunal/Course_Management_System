@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createCourse } from "../../services/instructorService.js";
+import { useMutation } from "@tanstack/react-query";
+
 
 const CreateCourse = () => {
   const navigate = useNavigate();
@@ -14,17 +16,17 @@ const CreateCourse = () => {
     price: "",
   });
 
-
+  const mutation = useMutation({
+    mutationFn: createCourse,
+    onSuccess: () => {
+      navigate("/instructor/dashboard")
+    }
+  })
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-     
-    const res = await createCourse(formData)
 
-    if(res.ok){
-        navigate("/instructor/dashboard")
-
-    } 
+    mutation.mutate(formData);
   };
 
   return (
@@ -56,8 +58,8 @@ const CreateCourse = () => {
               type="text"
               id="title"
               name="title"
-             
-              onChange={(e)=>setFormData({...formData, title: e.target.value }) }
+
+              onChange={(e) => setFormData({ ...formData, title: e.target.value })}
               placeholder="e.g., Complete Web Development Bootcamp"
               className="w-full px-4 py-3 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
               required
@@ -72,8 +74,8 @@ const CreateCourse = () => {
             <textarea
               id="description"
               name="description"
-             
-              onChange={(e)=>setFormData({...formData, description: e.target.value }) }
+
+              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
               placeholder="Describe your course in detail. What will students learn?"
               rows="5"
               className="w-full px-4 py-3 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition resize-none"
@@ -91,8 +93,8 @@ const CreateCourse = () => {
               <select
                 id="category"
                 name="category"
-                
-                onChange={(e)=>setFormData({...formData, category: e.target.value }) }
+
+                onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                 className="w-full px-4 py-3 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
                 required
               >
@@ -116,8 +118,8 @@ const CreateCourse = () => {
               <select
                 id="level"
                 name="level"
-                
-                onChange={(e)=>setFormData({...formData, level: e.target.value }) }
+
+                onChange={(e) => setFormData({ ...formData, level: e.target.value })}
                 className="w-full px-4 py-3 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
                 required
               >
@@ -132,7 +134,7 @@ const CreateCourse = () => {
           {/* Price Field */}
           <div>
             <label htmlFor="price" className="block text-sm font-medium text-white mb-2">
-              Price (USD) *
+              Price (USD)*
             </label>
             <div className="relative">
               <span className="absolute left-4 top-3 text-gray-400 text-lg">$</span>
@@ -140,8 +142,8 @@ const CreateCourse = () => {
                 type="number"
                 id="price"
                 name="price"
-              
-                onChange={(e)=>setFormData({...formData, price: e.target.value }) }
+                
+                onChange={(e) => setFormData({ ...formData, price: e.target.value })}
                 placeholder="0.00"
                 step="0.01"
                 min="0"
@@ -157,8 +159,9 @@ const CreateCourse = () => {
             <button
               type="submit"
               className="flex-1 py-3 px-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition duration-200 shadow-md"
+              disabled = {mutation.isPending}
             >
-              Create Course
+              {mutation.isPending ? "Creating...":"Create Course"}
             </button>
             <button
               type="button"
