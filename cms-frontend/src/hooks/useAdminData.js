@@ -1,10 +1,10 @@
-import { useQueries, useQuery } from "@tanstack/react-query";
+import {  useQuery } from "@tanstack/react-query";
 import { getAllUsers, getPending_course } from "../services/adminService";
 
 
 export const adminData = () => {
 
-    const usersQuery = useQueries({
+    const usersQuery = useQuery({
         queryKey: ["admin_user"],
         queryFn: getAllUsers,
     });
