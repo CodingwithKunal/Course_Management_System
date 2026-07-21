@@ -53,8 +53,20 @@ export const checkCourseEnrollment = async (courseId) => {
         return { ok: true, isEnrolled: res.data.isEnrolled }
         
     } catch (error) {
-        console.error("Error checking enrollment:", error.response?.data?.message || error.message)
+        toast.error("Error checking enrollment:", error.response?.data?.message || error.message)
         return { ok: false, isEnrolled: false }
+    }
+}
+
+
+export const getContinueLearningCourse = async () => {
+    try {
+        const res = await API.get("/course/continue-learning")
+        return { ok: true, data: res.data }
+    } catch (error) {
+        
+        toast.error( error.response?.data?.message || "Failed to fetch continue learning course")
+        return { ok: false }
     }
 }
 
