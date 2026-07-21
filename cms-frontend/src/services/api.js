@@ -2,7 +2,7 @@ import axios from "axios";
 import { toast } from "sonner";
 
 const API = axios.create({
-    baseURL: import.meta.env.VIT_Backend_URL || "http://localhost:5000/api",
+    baseURL: import.meta.env.VITE_Backend_URL || import.meta.env.VIT_Backend_URL || "http://localhost:5000/api",
 })
 // Attach token automatically
    API.interceptors.request.use((req)=> {
@@ -17,6 +17,11 @@ const API = axios.create({
 // Response interceptor to handle errors globally 
   API.interceptors.response.use((res) => res, (err) => {
     const status = err.response ? err.response.status : null;
+
+    if (err.code === "ERR_NETWORK" || /ECONNREFUSED/i.test(err.message || "")) {
+        toast.error("Backend is not reachable at http://localhost:5000. Start the server or check VITE_Backend_URL.");
+    }
+
     if(status === 401) {
         localStorage.removeItem("token");
         toast.error("Session expired. Please login again.");
