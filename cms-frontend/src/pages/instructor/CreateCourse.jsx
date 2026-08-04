@@ -69,17 +69,17 @@ const CreateCourse = () => {
           {/* Description Field */}
           <div>
             <label htmlFor="description" className="block text-sm font-medium text-white mb-2">
-              Description *
+              Description 
             </label>
             <textarea
               id="description"
               name="description"
 
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              placeholder="Describe your course in detail. What will students learn?"
+              placeholder="Describe your course in detail. What will students learn? Or If you don't want to add description so you write 'No description provided.'"
               rows="5"
               className="w-full px-4 py-3 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition resize-none"
-              required
+              
             />
           </div>
 
@@ -134,10 +134,10 @@ const CreateCourse = () => {
           {/* Price Field */}
           <div>
             <label htmlFor="price" className="block text-sm font-medium text-white mb-2">
-              Price (USD)*
+              Price *
             </label>
             <div className="relative">
-              <span className="absolute left-4 top-3 text-gray-400 text-lg">$</span>
+              <span className="absolute left-4 top-3 text-gray-400 text-lg">₹</span>
               <input
                 type="number"
                 id="price"
