@@ -10,9 +10,13 @@ import CourseDetail from "../pages/public/CourseDetail"
 import Checkout from "../pages/student/Checkout"
 import CourseLearn from "../pages/student/CourseLearn"
 import Dashboard from "../pages/student/Dashboard"
-import InstructorDashboard from "../pages/instructor/InstructorDashboard"
+ 
 import CreateCourse from "../pages/instructor/CreateCourse"
 import AdminDashboard from "../pages/admin/AdminDashboard"
+import Main_Dash from "../pages/instructor/instructor_Analytic_Dashboard/Main_Dash"
+import Draft_courses from "../pages/instructor/instructor_Analytic_Dashboard/Draft_courses"
+import Edit_course from "../pages/instructor/instructor_Analytic_Dashboard/Edit_course"
+import ResubmitCourse from "../pages/instructor/ResubmitCourse"
 
 function AppRoutes() {
    return (
@@ -49,9 +53,28 @@ function AppRoutes() {
 
             <Route path="/instructor/dashboard" element={
                <ProtectedRoute allowedRoles={["INSTRUCTOR"]}>
-                  <InstructorDashboard/>
+                  
+                  <Main_Dash/>
                </ProtectedRoute>
             } />
+            
+            <Route path="/instructor/handle_draft_courses" element={
+               <ProtectedRoute allowedRoles={["INSTRUCTOR"]}> 
+                  <Draft_courses/>
+               </ProtectedRoute>
+            }/>
+
+            <Route path="/instructor/edit-course/:courseId" element={
+               <ProtectedRoute allowedRoles={["INSTRUCTOR"]}>
+                  <Edit_course/>
+               </ProtectedRoute>
+            }/>
+
+            <Route path="/instructor/resubmit-course/:courseId" element={
+               <ProtectedRoute allowedRoles={["INSTRUCTOR"]}>
+                  <ResubmitCourse/>
+               </ProtectedRoute>
+            }/>
 
             <Route path="/instructor/create-course" element={
                <ProtectedRoute allowedRoles={["INSTRUCTOR"]}>
