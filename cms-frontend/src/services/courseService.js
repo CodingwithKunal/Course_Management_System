@@ -8,7 +8,6 @@ import { toast } from "sonner";
 export const getAllCourses = async (params) => {
     try {
         const res = await API.get("/course/get-all-courses", { params })
-        toast.success(res.data.message)
         return { ok: true, data: res.data }
 
     } catch (error) {
@@ -23,7 +22,6 @@ export const getAllCourses = async (params) => {
 export const getCourseDetails = async (coureseId) => {
     try {
         const res = await API.get(`/course/course-details/${coureseId}`)
-        toast.success(res.data.message)
         return { ok: true, data: res.data }
 
     } catch (error) {
@@ -36,12 +34,14 @@ export const getCourseDetails = async (coureseId) => {
 export const enrollInCourse = async (courseId) => {
     try {
         const res = await API.post(`/course/enroll/${courseId}`) 
-        toast.success(res.data.message)
-        return {ok: true, data: res.data}
+        if (res.data?.success) {
+            toast.success(res.data.message || "Course enrolled successfully")
+        }
+        return { ok: true, data: res.data }
         
     } catch (error) {
         toast.error(error.response?.data?.message || "Failed to enroll in course")
-        return { ok: false}
+        return { ok: false }
     }
 }
 
@@ -53,7 +53,7 @@ export const checkCourseEnrollment = async (courseId) => {
         return { ok: true, isEnrolled: res.data.isEnrolled }
         
     } catch (error) {
-        toast.error("Error checking enrollment:", error.response?.data?.message || error.message)
+        toast.error(error.response?.data?.message || "Error checking enrollment")
         return { ok: false, isEnrolled: false }
     }
 }
@@ -64,7 +64,6 @@ export const getContinueLearningCourse = async () => {
         const res = await API.get("/course/continue-learning")
         return { ok: true, data: res.data }
     } catch (error) {
-        
         toast.error( error.response?.data?.message || "Failed to fetch continue learning course")
         return { ok: false }
     }
