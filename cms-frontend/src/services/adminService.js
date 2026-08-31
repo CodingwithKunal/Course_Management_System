@@ -12,6 +12,16 @@ export const getAllUsers = async () => {
     }
 }
 
+export const getTotalEnrolledStudent = async()=>{
+    try {
+        const res = await API.get("/admin/total_Student")
+        return {ok:true, data:res.data} 
+    } catch (error) {
+        toast.error(error.response?.data?.message || "Failed to fetch TotalStudents")
+        return {ok:false}
+    }  
+}
+
 // Get pending instructors
 export const getPendingInstructors = async () => {
     try {
@@ -173,3 +183,34 @@ export const promoteToAdmin = async (userId) => {
         };
     }
 };
+
+
+
+export const getTotalRevenue = async()=>{
+    try {
+        const res = await API.get("/admin/getTotalRevenue")
+        return {ok:true,message:res.data.message, data:res.data}
+    } catch (error) {
+        toast.error(error.response?.data?.message || "Failed to get Revenue")
+    }
+}
+
+export const getPublishCourse = async()=>{
+    try {
+        const res = await API.get("/admin/getPublishCourse")
+        return {ok:true, message:res.data.message, data:res.data}
+    } catch (error) {
+        toast.error(error.response?.data?.message )
+        return {ok:false}
+    }
+}
+
+export const getAdminRecentActivity = async()=>{
+    try {
+        const res = await API.get("/admin/getRecentAcitivities")
+        return {ok:true, data:res.data}
+    } catch (error) {
+        toast.error(error.response?.data?.message || "Failed to get RecentActivities...")
+        return {ok:false}
+    }
+}
