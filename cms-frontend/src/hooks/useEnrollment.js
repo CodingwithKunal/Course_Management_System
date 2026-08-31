@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { updateWatchProgress, getCourseProgress } from "../services/enrollmentService.js";
 
 
 export const useEnrollment = (courseId, videoRef) => {
     const [progress, setProgress] = useState("NOT_STARTED");
-    const [saved, setsaved] = useState(false);
-
+    const [saved, setSaved] = useState(false);
+    const timerRef = useRef(null);
 
     // Update watch progress when the user watches the video
     useEffect(() => {
@@ -19,26 +19,59 @@ export const useEnrollment = (courseId, videoRef) => {
         fetchProgress();
     }, [courseId]);
 
-
-    // Save watch progress every 10 seconds while the video is playing   
     useEffect(() => {
-        if(!videoRef?.current) return 
+        if (!videoRef?.current) return;
 
-        const interval = setInterval(async () => {
-            
-                const currentTime = videoRef.current.currentTime;
-                
-                await updateWatchProgress(courseId, currentTime);
-                setsaved(true);
+        const video = videoRef.current;
 
-                setTimeout(() => setsaved(false), 2000); // Reset saved state after 2 seconds
-        
-        }, 10000); // Update every 10 seconds
+        const clearSavedTimer = () => {
+            if (timerRef.current) {
+                clearTimeout(timerRef.current);
+                timerRef.current = null;
+            }
+        };
 
-        return () => clearInterval(interval);
+        const saveProgress = async () => {
+            if (video.paused || video.currentTime <= 0) return;
+
+            const res = await updateWatchProgress(courseId, video.currentTime);
+            if (!res.ok) return;
+
+            setSaved(true);
+            clearSavedTimer();
+            timerRef.current = setTimeout(() => setSaved(false), 2000);
+        };
+
+        let intervalId = null;
+
+        const startSaving = () => {
+            saveProgress();
+            intervalId = setInterval(saveProgress, 4000);
+        };
+
+        const stopSaving = () => {
+            if (intervalId) {
+                clearInterval(intervalId);
+                intervalId = null;
+            }
+        };
+
+        video.addEventListener("play", startSaving);
+        video.addEventListener("pause", stopSaving);
+        video.addEventListener("ended", stopSaving);
+
+        if (!video.paused) {
+            startSaving();
+        }
+
+        return () => {
+            stopSaving();
+            clearSavedTimer();
+            video.removeEventListener("play", startSaving);
+            video.removeEventListener("pause", stopSaving);
+            video.removeEventListener("ended", stopSaving);
+        };
     }, [courseId, videoRef]);
 
-    
     return { progress, saved };
-
-}
+};
