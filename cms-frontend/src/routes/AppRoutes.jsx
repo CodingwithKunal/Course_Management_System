@@ -10,7 +10,7 @@ import CourseDetail from "../pages/public/CourseDetail"
 import Checkout from "../pages/student/Checkout"
 import CourseLearn from "../pages/student/CourseLearn"
 import Dashboard from "../pages/student/Dashboard"
- 
+
 import CreateCourse from "../pages/instructor/CreateCourse"
 import AdminDashboard from "../pages/admin/AdminDashboard"
 import Main_Dash from "../pages/instructor/instructor_Analytic_Dashboard/Main_Dash"
@@ -27,13 +27,13 @@ function AppRoutes() {
                <Route path="/courses" element={<Courses />} />
                <Route path="/courses/:id" element={<CourseDetail />} />
 
-               <Route path="/course/:id/learn" element={
-                  <ProtectedRoute allowedRoles={["USER",]}>
-                     <CourseLearn />
-                  </ProtectedRoute>
-               } />
-               
             </Route>
+            
+            <Route path="/course/:id/learn" element={
+               <ProtectedRoute allowedRoles={["USER",]}>
+                  <CourseLearn />
+               </ProtectedRoute>
+            } />
 
             <Route path="/checkout/:courseId" element={<Checkout />} />
 
@@ -46,45 +46,45 @@ function AppRoutes() {
 
             <Route path="/dashboard" element={
                <ProtectedRoute allowedRoles={["USER"]}>
-                  <Dashboard/>
+                  <Dashboard />
                </ProtectedRoute>
             }
             />
 
             <Route path="/instructor/dashboard" element={
                <ProtectedRoute allowedRoles={["INSTRUCTOR"]}>
-                  
-                  <Main_Dash/>
+
+                  <Main_Dash />
                </ProtectedRoute>
             } />
-            
+
             <Route path="/instructor/handle_draft_courses" element={
-               <ProtectedRoute allowedRoles={["INSTRUCTOR"]}> 
-                  <Draft_courses/>
+               <ProtectedRoute allowedRoles={["INSTRUCTOR"]}>
+                  <Draft_courses />
                </ProtectedRoute>
-            }/>
+            } />
 
             <Route path="/instructor/edit-course/:courseId" element={
                <ProtectedRoute allowedRoles={["INSTRUCTOR"]}>
-                  <Edit_course/>
+                  <Edit_course />
                </ProtectedRoute>
-            }/>
+            } />
 
             <Route path="/instructor/resubmit-course/:courseId" element={
                <ProtectedRoute allowedRoles={["INSTRUCTOR"]}>
-                  <ResubmitCourse/>
+                  <ResubmitCourse />
                </ProtectedRoute>
-            }/>
+            } />
 
             <Route path="/instructor/create-course" element={
                <ProtectedRoute allowedRoles={["INSTRUCTOR"]}>
-                  <CreateCourse/>
+                  <CreateCourse />
                </ProtectedRoute>
-            }/>
+            } />
 
             <Route path="/admin" element={
                <ProtectedRoute allowedRoles={["ADMIN"]}>
-                 <AdminDashboard/>
+                  <AdminDashboard />
                </ProtectedRoute>
             } />
 
