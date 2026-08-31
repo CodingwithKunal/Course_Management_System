@@ -7,7 +7,7 @@ import API from './api.js';
 export const updateWatchProgress = async (courseId, currentTime) => {
     try {
         const res = await API.patch(`/course/courses/${courseId}/watch-progress`, { currentTime })
-        toast.success(res.data.message)
+
         return { ok: true, data: res.data }
 
     } catch (error) {
@@ -23,7 +23,7 @@ export const updateWatchProgress = async (courseId, currentTime) => {
 export const getCourseProgress = async (courseId) => {
     try {
         const res = await API.get(`/course/course/${courseId}/progress`)
-        toast.success(res.data.message)
+
         return { ok: true, data: res.data }
     } catch (error) {
         toast.error(error.response?.data?.message || "Failed to fetch course progress. Please try again.")
@@ -37,7 +37,7 @@ export const getCourseProgress = async (courseId) => {
 export const markCourseComplete = async (courseId) => {
     try {
         const res = await API.patch(`/course/course/${courseId}/complete`)
-        toast.success(res.data.message)
+        
         return { ok: true, data: res.data }
 
     } catch (error) {
@@ -52,7 +52,7 @@ export const markCourseComplete = async (courseId) => {
 export const getMyEnrollments = async () => {
     try {
         const res = await API.get("/course/my-enrollments")
-        toast.success(res.data.message)
+
         return { ok: true, data: res.data }
     } catch (error) {
         toast.error(error.response?.data?.message || "Failed to fetch enrollments. Please try again.")
