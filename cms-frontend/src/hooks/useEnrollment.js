@@ -39,14 +39,14 @@ export const useEnrollment = (courseId, videoRef) => {
 
             setSaved(true);
             clearSavedTimer();
-            timerRef.current = setTimeout(() => setSaved(false), 2000);
+            timerRef.current = setTimeout(() => setSaved(false), 3000);
         };
 
         let intervalId = null;
 
         const startSaving = () => {
             saveProgress();
-            intervalId = setInterval(saveProgress, 4000);
+            intervalId = setInterval(saveProgress, 5000);
         };
 
         const stopSaving = () => {
