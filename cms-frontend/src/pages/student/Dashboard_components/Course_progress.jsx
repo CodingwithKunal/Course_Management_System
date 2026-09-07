@@ -1,8 +1,9 @@
 
 import useMyEnrollments from "../../../hooks/useMyEnrollments.js"
 import { useNavigate } from "react-router"
-import { ProgressBar} from "../../../components/course/ProgressBar.jsx"
+import { ProgressBar } from "../../../components/course/ProgressBar.jsx"
 import EmptyState from "../../../components/common/EmptyState.jsx"
+import {   FaLongArrowAltRight } from "react-icons/fa";
 
 const Course_progress = () => {
     const nevigate = useNavigate()
@@ -12,7 +13,7 @@ const Course_progress = () => {
     if (error) { return <h2>Failed to load dashboard. Please try again.</h2> }
     if (!ProgressBar || ProgressBar.length === 0) {
         return (
-            
+
             <EmptyState
                 message="You have no course progress yet."
                 cta="Go to Courses"
@@ -46,16 +47,25 @@ const Course_progress = () => {
                         <p className="text-gray-500">
                             Instructor: {item.course.instructor?.name}
                         </p>
-                         
-                         {item.progress === "IN_PROGRESS" && (
-                                  <ProgressBar progress={item.progress} />
-                         ) }
 
-                        <p className="mt-2">
-                            Status: {item.progress}
-                        </p>
+                        {item.progress === "IN_PROGRESS" && (
+                            <ProgressBar progress={item.progress} />
+                        )}
 
-                      
+                        <div className="flex justify-between ">
+                            <p className="mt-2">
+                                Status: {item.progress}
+                            </p>
+                            <div onClick={()=>nevigate(`/course/${item.course._id}/learn`)} className="flex  gap-2 bg-gray-800 rounded-xl py-1 px-4 border cursor-pointer">
+                            <p> see </p>
+                             <p><FaLongArrowAltRight className="mt-1" /></p>
+
+                            </div>
+                            
+                        </div>
+
+
+
                     </div>
                 ))}
             </div>
