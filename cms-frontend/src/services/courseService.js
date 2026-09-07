@@ -62,10 +62,23 @@ export const checkCourseEnrollment = async (courseId) => {
 export const getContinueLearningCourse = async () => {
     try {
         const res = await API.get("/course/continue-learning")
-        return { ok: true, data: res.data }
+        return { data: res.data }
     } catch (error) {
         toast.error( error.response?.data?.message || "Failed to fetch continue learning course")
-        return { ok: false }
+         
     }
 }
 
+
+export const courseRating = async (courseId,ratingData) =>{
+    try {
+        const res = await API.post(`/course/${courseId}/review`, ratingData)
+        const message = "Thank you for your rating."
+        toast.success(message)
+        return { ok:true, data:res.data}
+        
+    } catch (error) {
+        toast.error(error.response?.data?.message || "Failed to submit rating")
+        return { ok: false, data: null }
+    }
+}
