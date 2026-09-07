@@ -67,7 +67,7 @@ const CourseOverview = () => {
           </div>
           <div>
             <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Instructor</p>
-            <p className="text-sm font-bold text-white mt-0.5 truncate max-w-[130px]">
+            <p className="text-sm font-bold text-white mt-0.5 truncate max-w-32.5">
                 {instructorName}
             </p>
           </div>
