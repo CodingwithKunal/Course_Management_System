@@ -7,12 +7,17 @@ import { toast } from "sonner";
 // Get all courses with pagination and search
 export const getAllCourses = async (params) => {
     try {
-        const res = await API.get("/course/get-all-courses", { params })
-        return { ok: true, data: res.data }
+        const queryParams = {
+            ...params,
+            category: Array.isArray(params?.category) ? params.category.join(",") : params?.category,
+            level: Array.isArray(params?.level) ? params.level.join(",") : params?.level,
+        }
+        const res = await API.get("/course/get-all-courses", { params: queryParams })
+        return { data: res.data }
 
     } catch (error) {
         toast.error(error.response?.data?.message || "Failed to fetch courses")
-        return { ok: false }
+        
     }
 }
 
