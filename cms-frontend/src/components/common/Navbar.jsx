@@ -10,7 +10,7 @@ function Navbar() {
     }
 
     return (
-        <nav className=" flex justify-evenly gap-5 py-2 bg-white/15 backdrop-blur-sm rounded-3xl border border-white   text-white w-1/2 mx-auto mt-5">
+        <nav className="  flex justify-evenly gap-5 py-2 bg-white/15 backdrop-blur-sm rounded-3xl border border-white   text-white w-1/2 mx-auto mt-5  ">
          <Link to= "/" className="text-lg font-bold ">LMS</Link> 
             <Link to= "/courses" className="text-lg">Courses</Link>
 
