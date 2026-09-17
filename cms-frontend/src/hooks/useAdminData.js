@@ -1,5 +1,5 @@
-import {  useQuery } from "@tanstack/react-query";
-import { getAdminRecentActivity, getAllUsers, getPending_course, getPublishCourse, getTotalEnrolledStudent, getTotalRevenue, publishCourse } from "../services/adminService";
+import { useQuery } from "@tanstack/react-query";
+import { getAdminRecentActivity, getAllUsers, getAvgRating, getPending_course, getPublishCourse, getTotalEnrolledStudent, getTotalRevenue } from "../services/adminService";
 
 
 export const useAdminData = () => {
@@ -10,8 +10,8 @@ export const useAdminData = () => {
     });
 
     const StudentQuery = useQuery({
-        queryKey:["admin_students"],
-        queryFn:getTotalEnrolledStudent,
+        queryKey: ["admin_students"],
+        queryFn: getTotalEnrolledStudent,
     })
 
     const coursesQuery = useQuery({
@@ -21,18 +21,23 @@ export const useAdminData = () => {
 
 
     const getRevenueQuery = useQuery({
-        queryKey:["admin_Revenue"],
+        queryKey: ["admin_Revenue"],
         queryFn: getTotalRevenue,
     })
 
     const getPusblishCourseQuery = useQuery({
-        queryKey:["admin publishcourse"],
-        queryFn:getPublishCourse,
+        queryKey: ["admin publishcourse"],
+        queryFn: getPublishCourse,
     })
 
     const getRecentAcitivitiesQuery = useQuery({
-        queryKey:["admin_activity"],
-        queryFn:getAdminRecentActivity,
+        queryKey: ["admin_activity"],
+        queryFn: getAdminRecentActivity,
+    })
+
+    const getAvgRatingQuery = useQuery({
+        queryKey: ["admin_AvgRating"],
+        queryFn: getAvgRating
     })
 
     return {
@@ -41,24 +46,29 @@ export const useAdminData = () => {
         pending_courses: coursesQuery.data?.data?.pending_courses || [],
         totalRevenue: getRevenueQuery.data?.data?.totalRevenue || 0,
         publishCourse: getPusblishCourseQuery.data?.data?.publishCourse || 0,
-        activities : getRecentAcitivitiesQuery.data?.data?.activities || [],
+        activities: getRecentAcitivitiesQuery.data?.data?.activities || [],
+        AvgRating: Number(getAvgRatingQuery.data?.data?.totalAvg) || 0,
+
+
+        AvgRatingisLoading: getAvgRatingQuery.isLoading,
+        AvgRatingisError: getAvgRatingQuery.isError,
 
         activitiesLoading: getRecentAcitivitiesQuery.isLoading,
         activitiesError: getRecentAcitivitiesQuery.isError,
         activitiesRefetch: getRecentAcitivitiesQuery.refetch,
 
-        publishcourseLoading : getPusblishCourseQuery.isLoading,
+        publishcourseLoading: getPusblishCourseQuery.isLoading,
         publishcourseError: getPusblishCourseQuery.isError,
         publishcourseRefetch: getPusblishCourseQuery.refetch,
 
-        revenueLoading : getRevenueQuery.isLoading,
-        revenueError : getRevenueQuery.isError,
+        revenueLoading: getRevenueQuery.isLoading,
+        revenueError: getRevenueQuery.isError,
         revenueRefetch: getRevenueQuery.refetch,
-        
+
         userLoading: usersQuery.isLoading,
         userError: usersQuery.isError,
 
-        studentLoading : StudentQuery.isLoading,
+        studentLoading: StudentQuery.isLoading,
         studentError: StudentQuery.isError,
 
         courseError: coursesQuery.isError,
