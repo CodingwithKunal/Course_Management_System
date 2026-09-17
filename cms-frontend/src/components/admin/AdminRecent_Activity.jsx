@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { FiCheckCircle, FiUploadCloud, FiStar } from 'react-icons/fi';
 
 // Relative timestamp formatter
@@ -46,11 +46,41 @@ const getActivityIcon = (type) => {
   }
 };
 
+
 const RecentActivity = ({ activities = [], isLoading, isError }) => {
   const safeActivities = Array.isArray(activities) ? activities : [];
 
+  const [isCleared, setIsCleared] = useState(() => {
+    return localStorage.getItem("clearAllActivity") === 'true'
+  });
+
+  const visibleActivities = isCleared ? [] : safeActivities;
+
+  const scrollContainerRef = useRef(null);
+  const [scrolltoBottom, setScrolltoBottom] = useState(false);
+
+  const handleScroll = () => {
+    if (scrollContainerRef.current) {
+      const { scrollTop, scrollHeight, clientHeight } = scrollContainerRef.current;
+      const reachbottom = scrollTop + clientHeight >= scrollHeight - 10;
+
+      setScrolltoBottom(reachbottom);
+    }
+  };
+
+  const handleClearAll = () => {
+    const confirmation = window.confirm("Are you sure you want to clear all ?");
+
+    if (confirmation) {
+      setIsCleared(true);
+      setScrolltoBottom(false);
+      localStorage.setItem("clearAllActivity", 'true')
+    }
+  };
+
+
   return (
-    <div className="bg-white rounded-2xl border border-slate-100 p-6 shadow-sm flex flex-col justify-between h-full">
+    <div className="bg-white rounded-2xl border border-slate-100 p-6 shadow-sm flex flex-col justify-between h-full ">
       <div>
         <h3 className="text-base font-bold text-slate-900 mb-5">Recent Activity</h3>
 
@@ -77,17 +107,19 @@ const RecentActivity = ({ activities = [], isLoading, isError }) => {
         )}
 
         {/* Empty State */}
-        {!isLoading && !isError && safeActivities.length === 0 && (
+        {!isLoading && !isError && visibleActivities.length === 0 && (
           <div className="py-6 text-center text-xs text-slate-400">
             No recent activity recorded yet.
           </div>
         )}
 
         {/* Activity List */}
-        {!isLoading && !isError && safeActivities.length > 0 && (
-          <div className="space-y-4">
-            {safeActivities.map((activity) => (
-              <div key={activity.id || activity._id } className="flex items-start gap-3.5">
+        {!isLoading && !isError && visibleActivities.length > 0 && (
+
+          <div className="space-y-4 max-h-95 overflow-y-auto" ref={scrollContainerRef} onScroll={handleScroll}>
+
+            {visibleActivities.map((activity) => (
+              <div key={activity.id || activity._id} className="flex items-start gap-3.5">
                 {getActivityIcon(activity.type)}
                 <div className="flex-1 min-w-0">
                   <p className="text-xs font-semibold text-slate-900 leading-none">
@@ -102,16 +134,27 @@ const RecentActivity = ({ activities = [], isLoading, isError }) => {
                 </div>
               </div>
             ))}
+
           </div>
         )}
       </div>
 
-      <button
-        type="button"
-        className="text-xs font-semibold text-indigo-600 hover:text-indigo-700 text-center w-full mt-6 pt-3 border-t border-slate-100 transition"
-      >
-        View All Activity
-      </button>
+      <div className="mt-4 pt-3 border-t border-slate-100">
+        {/* Logic: Agar user bottom tak scroll kar chuka hai OR total items <= 6 hain */}
+        {(scrolltoBottom || visibleActivities.length <= 6) && visibleActivities.length > 0 ? (
+          <button
+            type="button"
+            onClick={handleClearAll}
+            className="text-xs font-semibold text-red-500 hover:text-red-600 w-full text-center cursor-pointer"
+          >
+            Clear All Activities
+          </button>
+        ) : (
+          <p className="text-[11px] text-slate-400 text-center">
+            Scroll down to view all activities
+          </p>
+        )}
+      </div>
     </div>
   );
 };
