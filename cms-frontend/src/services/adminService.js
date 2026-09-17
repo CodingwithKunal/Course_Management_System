@@ -214,3 +214,16 @@ export const getAdminRecentActivity = async()=>{
         return {ok:false}
     }
 }
+
+
+export const getAvgRating = async()=> {
+    try {
+        const res = await API.get("/admin/getTotalAvgRating")
+        return {data:res.data}
+    } catch (error) {
+        toast.error(error.response?.data?.message || "Failed to get AvgRating !")        
+
+    }  
+}
+
+
