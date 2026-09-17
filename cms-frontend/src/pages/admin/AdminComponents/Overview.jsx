@@ -8,7 +8,10 @@ const Overview = () => {
     totalStudent,
     totalRevenue,
     publishCourse,
+    AvgRating,
     activities,
+    AvgRatingisLoading,
+    AvgRatingisError,
     activitiesLoading,
     activitiesError,
     publishcourseError,
@@ -22,6 +25,7 @@ const Overview = () => {
   const studentCount = Number(totalStudent) || 0
   const TotalAmount = Number(totalRevenue) || 0
   const TotalPublishCourse = Number(publishCourse) || 0
+  const TotalAvgrating = Number(AvgRating) || 0
 
   return (
     <main>
@@ -41,7 +45,7 @@ const Overview = () => {
         />
 
         <Admin_Data_cards
-          title={"Avg Rating"} value={"60"} isLoading={publishcourseLoading} isError={publishcourseError}
+          title={"Avg Rating"} value={TotalAvgrating} isLoading={AvgRatingisLoading} isError={AvgRatingisError}
         />
 
       </section>
@@ -56,12 +60,13 @@ const Overview = () => {
         </section>
 
         <section className='mt-5 w-4/10 bg-stone-400  rounded-2xl '>
+
           <RecentActivity
             activities={activities}
             isLoading={activitiesLoading}
             isError={activitiesError}
           />
-
+          
         </section>
 
       </div>
