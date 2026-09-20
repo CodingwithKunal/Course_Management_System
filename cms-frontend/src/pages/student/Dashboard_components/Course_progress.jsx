@@ -9,20 +9,12 @@ const Course_progress = () => {
     const nevigate = useNavigate()
 
     const { enrollments, error, isLoading } = useMyEnrollments()
+    const validEnrollments = enrollments?.filter((item) => item?.course?._id) || []
+
     if (isLoading) { return <h2>Loading Dashboard...</h2> }
     if (error) { return <h2>Failed to load dashboard. Please try again.</h2> }
-    if (!ProgressBar || ProgressBar.length === 0) {
-        return (
 
-            <EmptyState
-                message="You have no course progress yet."
-                cta="Go to Courses"
-                oncta={() => nevigate("/courses")}
-            />
-        )
-    }
-
-    if (!enrollments || enrollments.length === 0) {
+    if (validEnrollments.length === 0) {
         return (
             <EmptyState
                 message="You have no enrollments yet."
@@ -35,7 +27,7 @@ const Course_progress = () => {
     return (
         <section>
             <div className="grid md:grid-cols-3 gap-5">
-                {enrollments.map((item) => (
+                {validEnrollments.map((item) => (
                     <div
                         key={item._id}
                         className="border rounded-lg p-4 shadow"
