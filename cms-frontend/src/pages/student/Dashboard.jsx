@@ -33,7 +33,8 @@ function Dashboard() {
 
     return (
         <main className="p-5">
-            <div>
+            <div className="flex justify-between ">
+                <h1 onClick={()=>nevigate("/courses")} className=" cursor-pointer hover:text-amber-200 hover:border hover:border-white hover:rounded-3xl hover:py-2 hover:px-2 hover:text-sm hover:transition-all hover:duration-400  ">Back To Course</h1>
                 <h2 className=" font-bold">Welcome Back <span className=" text-3xl text-cyan-500">{enrollments[0]?.user?.name || "Student"}</span> </h2>
             </div>
             <h1 className="text-3xl font-bold mb-6 text-center">
