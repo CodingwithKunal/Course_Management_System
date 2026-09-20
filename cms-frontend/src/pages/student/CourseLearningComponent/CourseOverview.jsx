@@ -8,19 +8,21 @@ const CourseOverview = () => {
   const { id } = useParams()
   const { enrollments, isLoading, error } = useMyEnrollments()
 
+  if (isLoading) return <p className="text-slate-400  flex justify-center items-center">Loading overview...</p>
+  if (error) return <p className="text-red-400 flex justify-center items-center  ">Failed to load overview.</p>
+
   const currentEnrollment = enrollments?.find((item) => item.course === id || item.course?._id === id)
 
   const courseData = typeof currentEnrollment?.course === "object" ? currentEnrollment?.course : null
   const instructorName = courseData?.instructor?.name || "N/A"
   
-  const enrollAt = currentEnrollment?.enrolledAt || "N/A"
-  const formattedDateEnrolled = format(new Date(enrollAt), "MMM dd, yy")
+  const formattedDateEnrolled = currentEnrollment?.enrolledAt
+    ? format(new Date(currentEnrollment.enrolledAt), "MMM dd, yy")
+    : "N/A"
 
-  const lastActive = currentEnrollment?.updatedAt || "N/A"
-  const formateLastActiveDate = formatDistanceToNow(new Date(lastActive), {addSuffix:true})
-
-  if (isLoading) return <p className="text-slate-400  flex justify-center items-center">Loading overview...</p>
-  if (error) return <p className="text-red-400 flex justify-center items-center  ">Failed to load overview.</p>
+  const formateLastActiveDate = currentEnrollment?.updatedAt
+    ? formatDistanceToNow(new Date(currentEnrollment.updatedAt), { addSuffix: true })
+    : "N/A"
 
   return (
     <section className="space-y-6 text-slate-200">
