@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import CourseFilteration from './CourseFilteration.jsx';
 import { FiSearch, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { useMemo } from 'react';
+import { Loading_Error_state_handling } from '../../components/course/Loading_Error_state_handling.jsx';
 
 function Courses() {
 
@@ -39,24 +40,20 @@ function Courses() {
 
     if (isLoading) {
         return (
-            <div className="flex justify-center items-center py-20 text-slate-400">
-                <p className="animate-pulse font-medium text-lg">Loading courses...</p>
-            </div>
+            <Loading_Error_state_handling isLoading={isLoading} />
         );
     }
 
     if (isError) {
         return (
-            <div className="flex justify-center items-center py-20 text-red-400">
-                <p className="font-medium text-lg">Failed to load courses. Please try again later.</p>
-            </div>
+           <Loading_Error_state_handling isError={isError} />
         );
     }
 
     return (
         <main className=' px-10   mx-auto flex gap-8   py-8  '>
 
-            <section className='mt-10'>
+            <section className='mt-18'>
                 <CourseFilteration filters={filters} setfilters={setfilters} />
             </section>
 
@@ -104,12 +101,10 @@ function Courses() {
                         {courses.map((course) => (
                             <div key={course._id} className='border p-4 rounded-md shadow-sm'>
                                 <h2 className='text-lg font-semibold'>{course.title}</h2>
-                                <p className='text-gray-600'>{course.description}</p>
-                                <p className='text-sm text-gray-500'>Category: {course.category}</p>
-                                <p className='text-sm text-gray-500'>Level: {course.level}</p>
-                                <p className='text-sm text-gray-500'>Instructor: {course.instructor?.name}</p>
+                                <p className='text-sm text-gray-500 '>Category: {course.category}</p>
+                                <p className='text-sm text-gray-500 pb-12'>Level: {course.level}</p>
+                                
                                 <div className=' flex items-center'>
-
                                     <Link to={`/courses/${course._id}`} className='py-2 px-3 border border-white rounded-2xl text-center mt-4 cursor-pointer '>View Details</Link>
                                 </div>
 
