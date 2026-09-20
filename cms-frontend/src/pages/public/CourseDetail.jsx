@@ -4,6 +4,9 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { enrollInCourse } from '../../services/courseService.js'
 import { useSelector } from 'react-redux'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { IoPersonOutline } from "react-icons/io5";
+import { MdOutlineStar } from "react-icons/md";
+
 
 function CourseDetail() {
 
@@ -11,6 +14,8 @@ function CourseDetail() {
     const Navigate = useNavigate()
     const { isAuthenticated } = useSelector(state => state.auth)
     const queryClient = useQueryClient()
+
+    const { course, isLoading, error, isEnrolled, enrollmentLoading } = useCourseDetail(id)
 
     const mutation = useMutation({
         mutationFn: enrollInCourse,
@@ -21,10 +26,7 @@ function CourseDetail() {
              Navigate(`/course/${course._id}/learn`)
         }
     })
-
-    const { course, isLoading, error, isEnrolled, enrollmentLoading } = useCourseDetail(id)
     
-
 
 
     if (isLoading) { return <div>Loading...</div>; }
@@ -32,6 +34,9 @@ function CourseDetail() {
     if (!course) { return <div>Course not found.</div>; }
     if (enrollmentLoading) { return <div>Checking enrollment status...</div>; }
 
+
+    const totalstudents = course.studentsEnrolled ? course.studentsEnrolled.length : "0"
+    const evgRating  = course.averageRating ? course.averageRating : "0"
 
 
 
@@ -94,12 +99,27 @@ function CourseDetail() {
 
     return (
         <div className=' flex-col flex gap-4 p-5 w-1/2 border border-blue-500 rounded-lg'>
-            <h1>{course.title}</h1>
+           <div className=' flex justify-between'>
+             <h1>{course.title}</h1>
+             <div className='flex justify-center items-center gap-1.5'>
+                <p className='mb-2'><MdOutlineStar color='yellow' size={25} /></p>
+                <p className='text-xl'>{evgRating}</p>
+             </div>
+           </div>
+           
             <p>{course.description}</p>
             <p>Instructor: {course.instructor.name}</p>
             <p>Level: {course.level}</p>
             <p>Category: {course.category}</p>
-            <p>Price: ₹{course.price}</p>
+            <div className='flex justify-between'>
+             <p>Price: ₹{course.price}</p>
+             <div className='flex justify-center items-center gap-1.5'>
+                <IoPersonOutline size={24} className='mb-2'/>
+                <p className='text-xl'>{ totalstudents}</p>
+                <p className=' text-gray-500 text-xs'>students</p>
+             </div>
+            </div>
+           
 
             {renderEnrollButton()}
 
