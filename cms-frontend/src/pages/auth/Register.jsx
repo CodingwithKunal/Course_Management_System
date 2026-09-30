@@ -1,51 +1,75 @@
-import { useState } from "react"
-import { registerUser } from "../../services/authService.js";
-import { useNavigate } from "react-router";
+import React, { useState } from 'react'
+import UserRegister from '../../components/auth/UserRegister'
+import RegisterInstructor from '../../components/auth/RegisterInstructor'
+import { useNavigate } from 'react-router'
 
-function Register() {
-  const [form, setform] = useState({name:"", email:"", password:""})
-  const Nevigate = useNavigate();
 
-  const handleForm = async (e) => {
-    e.preventDefault()
+export const Register = () => {
+    const [showe, setshowe] = useState("student")
+    const Nevigate = useNavigate()
 
-    const res = await registerUser(form)
-    if(res.ok){
-      Nevigate("/login")
-    }
-  };
-  return (
-    <main className=" flex items-center justify-center  h-screen">
-     <button onClick={()=>Nevigate("/")} className="absolute top-5 left-5 text-gray-400 hover:text-gray-200 cursor-pointer">Back to Home</button>
+    return (
+        <main className=' flex gap-5 '>
+            <button onClick={() => Nevigate("/")} className="absolute top-5 left-5 text-gray-400 hover:text-gray-200 cursor-pointer">Back to Home</button>
+            <section className='flex justify-center items-center w-1/2 h-screen'>
+                <h1 className=' font-semibold text-7xl underline text-amber-700 '>Banner show </h1>
+            </section>
+            <section className=' flex items-center justify-center   w-1/2 max-h-10/12 bg-mist-200'>
+                <div className="flex flex-col items-center text-black space-x-5 text-xs">
+                    <div className='flex space-x-3 py-4'>
+                        {/* Student Radio Button Card */}
+                        <label
+                            htmlFor="student-radio"
+                            className={`py-2 px-3 cursor-pointer rounded-xl border flex items-center space-x-4 transition-all ${showe === "student"
+                                ? "border-sky-600 bg-sky-100 font-semibold"
+                                : "border-gray-400 bg-gray-200"
+                                }`}
+                        >
+                            <span>Student</span>
+                            <input
+                                type="radio"
+                                id="student-radio"
+                                name="userRole" // Same name links both radio buttons together
+                                value="student"
+                                checked={showe === "student"}
+                                onChange={(e) => setshowe(e.target.value)}
+                                className="cursor-pointer"
+                            />
+                        </label>
 
-      <div className="w-full max-w-md p-8 space-y-6 bg-gray-800 rounded-lg">  
-        <h2 className="text-2xl font-bold text-center text-white">Register for an Account</h2>
-        <form onSubmit={handleForm} className="space-y-6">
-          <div>
-            <label htmlFor="name" className="block text-sm font-medium text-white">Name</label>
-            <input type="text" id="name" className="w-full px-3 py-2 mt-1 border rounded-md bg-gray-700 text-white  focus:ring-2  outline-0" required 
-              onChange={(e)=>setform({...form, name: e.target.value})}
-            />
-          </div>
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-white">Email</label>
-            <input type="email" id="email" className="w-full px-3 py-2 mt-1 border rounded-md bg-gray-700 text-white  focus:ring-2  outline-0" required 
-              onChange={(e)=>setform({...form, email: e.target.value})}
-            />
-          </div>
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-white">Password</label>
-            <input type="password" id="password" className="w-full px-3 py-2 mt-1 border  rounded-md bg-gray-700 text-white   focus:ring-2 " required 
-              onChange={(e)=>setform({...form, password: e.target.value})}
-            />
-          </div>
-          <button type="submit" className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-md  focus:ring-2 ">Register</button>
-        </form>
-      </div>
+                        {/* Instructor Radio Button Card */}
+                        <label
+                            htmlFor="instructor-radio"
+                            className={`py-2 px-3 cursor-pointer rounded-xl border flex items-center space-x-4 transition-all ${showe === "instructor"
+                                ? "border-sky-600 bg-sky-100 font-semibold"
+                                : "border-gray-400 bg-gray-200"
+                                }`}
+                        >
+                            <span>Instructor</span>
+                            <input
+                                type="radio"
+                                id="instructor-radio"
+                                name="userRole" // Same name links both radio buttons together
+                                value="instructor"
+                                checked={showe === "instructor"}
+                                onChange={(e) => setshowe(e.target.value)}
+                                className="cursor-pointer"
+                            />
+                        </label>
 
-    </main>
-  )
+                    </div>
+
+                    <div className="mt-5">
+                        {showe === "student" && <UserRegister />}
+                        {showe === "instructor" && <RegisterInstructor />}
+                    </div>
+
+                    <h1 className='text-black text-sm text-center pb-5 mt-5'>Already have an Account? <span className=' cursor-pointer text-sky-800' onClick={() => Nevigate("/login")}>Sign In</span> </h1>
+
+                </div>
+
+            </section>
+
+        </main>
+    )
 }
-
-
-export default Register

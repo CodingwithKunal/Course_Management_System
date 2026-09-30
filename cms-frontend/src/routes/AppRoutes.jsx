@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Home from "../pages/public/Home"
 import Login from "../pages/auth/Login"
-import Register from "../pages/auth/Register"
+
 import PublicLayout from "../components/layouts/PublicLayout"
-import RegisterInstructor from "../pages/auth/RegisterInstructor"
+
 import ProtectedRoute from "./ProtectedRoute"
 import Courses from "../pages/public/Courses"
 import CourseDetail from "../pages/public/CourseDetail"
@@ -17,6 +17,12 @@ import Main_Dash from "../pages/instructor/instructor_Analytic_Dashboard/Main_Da
 import Draft_courses from "../pages/instructor/instructor_Analytic_Dashboard/Draft_courses"
 import Edit_course from "../pages/instructor/instructor_Analytic_Dashboard/Edit_course"
 import ResubmitCourse from "../pages/instructor/ResubmitCourse"
+import { Register } from "../pages/auth/Register"
+import { ForgotPassword } from "../pages/auth/ForgotPassword"
+import { ResetPassword } from "../pages/auth/ResetPassword"
+import { VerifyOtp } from "../pages/auth/VerifyOtp"
+
+
 
 function AppRoutes() {
    return (
@@ -28,9 +34,9 @@ function AppRoutes() {
                <Route path="/courses/:id" element={<CourseDetail />} />
 
             </Route>
-            
+
             <Route path="/course/:id/learn" element={
-               <ProtectedRoute allowedRoles={["USER",]}>
+               <ProtectedRoute allowedRoles={["USER", "INSTRUCTOR", "ADMIN"]}>
                   <CourseLearn />
                </ProtectedRoute>
             } />
@@ -39,8 +45,11 @@ function AppRoutes() {
 
 
             <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/register-instructor" element={<RegisterInstructor />} />
+            <Route path="/register" element={<Register/>} />
+            <Route path="/verify-otp" element={<VerifyOtp/>}/>
+            <Route path="/forgot-password" element={<ForgotPassword/>}/>
+            <Route path ="/reset-password/:resetToken" element={<ResetPassword/>} />
+            
 
 
 
