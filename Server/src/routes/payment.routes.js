@@ -7,5 +7,6 @@ import { createPaymentIntent , stripeWebhook } from "../controller/payment.contr
 
 router.post("/create-intent", verifyToken, createPaymentIntent);
 router.post("/webhook", stripeWebhook);
+ 
 
 export default router;

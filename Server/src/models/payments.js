@@ -7,11 +7,15 @@ const payementSchema = new mongoose.Schema({
     ref: "User",
     required: true
   },
+
   course: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Course",
     required: true
   },
+
+ 
+
   amount: {
     type: Number,
     required: true
@@ -20,9 +24,13 @@ const payementSchema = new mongoose.Schema({
     type: String,
     default: "inr"
   },
+   paidAt: {
+    type: Date
+  },
   stripePaymentIntentId: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   stripeChargeId: {
     type: String
@@ -35,8 +43,20 @@ const payementSchema = new mongoose.Schema({
   paymentMethod: {
     type: String,
     default: "CARD"
+  },
+  metadata: {
+    type: Object
+  },
+   failureReason: {
+    type: String
   }
+
+
 }, { timestamps: true });
+
+payementSchema.index({ user: 1 });
+payementSchema.index({ course: 1 });
+payementSchema.index({ status: 1 });
 
 const PaymentModel = mongoose.model("Payment", payementSchema);
 export default PaymentModel;

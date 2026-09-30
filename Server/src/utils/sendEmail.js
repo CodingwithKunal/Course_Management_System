@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer';
 
 export const sendEmail = async (options) => {
-    // 1. Transporter configuration
+    
     const transport = nodemailer.createTransport({
         service: "gmail",
         auth: {
@@ -10,7 +10,7 @@ export const sendEmail = async (options) => {
         }
     });
 
-    // 2. Email Options
+    
     const mailOptions = {
         from: `Learnify <${process.env.EMAIL_USER}>`,
         to: options.email,
@@ -18,6 +18,6 @@ export const sendEmail = async (options) => {
         html: options.htmlMessage,
     };
 
-    //Send Email
+    
     await transport.sendMail(mailOptions)
 };
