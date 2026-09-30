@@ -7,7 +7,6 @@ export const useEnrollment = (courseId, videoRef) => {
     const [saved, setSaved] = useState(false);
     const timerRef = useRef(null);
 
-    // Update watch progress when the user watches the video
     useEffect(() => {
         const fetchProgress = async () => {
             const res = await getCourseProgress(courseId);

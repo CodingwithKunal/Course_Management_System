@@ -28,13 +28,11 @@ const Pending_courses = () => {
 
   return (
  <main className="w-full space-y-4">
-      {/* Title Header */}
       <h2 className="text-xl font-bold text-white flex items-center gap-2">
         <span className="w-3 h-3 rounded-full bg-amber-500 inline-block"></span>
         Pending Courses
       </h2>
 
-      {/* Table Container */}
       <div className="w-full bg-[#0b0f19] rounded-xl overflow-hidden shadow-xl border border-slate-800/60">
         {getPendingCourses.length === 0 ? (
           <div className="p-6 text-center text-gray-400">No pending courses found.</div>

@@ -13,9 +13,8 @@ const AdminUsers = () => {
   const queryClient =  useQueryClient()
 
 
-  // Filter users based on search and role (exclude ADMIN users)
   const filteredUsers = users
-    .filter((user) => user.role !== "ADMIN") // Exclude admin users
+    .filter((user) => user.role !== "ADMIN")
     .filter((user) => {
       const matchesSearch =
         user.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -26,7 +25,6 @@ const AdminUsers = () => {
 
 
 
-  // Handle block/unblock user
   const blockToggleMutation = useMutation({
      mutationFn: blockUnblockUser,
 
@@ -47,7 +45,6 @@ const AdminUsers = () => {
 
 
 
-  // Handle delete user
   const userDeleteMutation = useMutation({
     mutationFn:  deleteUser,
     onSuccess:(result)=>{
@@ -73,7 +70,6 @@ const AdminUsers = () => {
 
 
 
-  // Loading state
   if (userLoading) {
     return (
       <div className="flex items-center justify-center py-12">
@@ -84,7 +80,6 @@ const AdminUsers = () => {
 
 
 
-  // Empty state
   if (users.length === 0) {
     return (
       <div className="text-center py-12">
@@ -100,7 +95,6 @@ const AdminUsers = () => {
     <div className=" rounded-lg shadow-sm border border-gray-200 p-6">
 
 
-      {/* Header */}
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-gray-900 mb-2">User Management</h2>
         <p className="text-gray-600">
@@ -109,11 +103,9 @@ const AdminUsers = () => {
       </div>
 
 
-      {/* Search and Filters */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
 
 
-        {/* Search Bar */}
         <div className="md:col-span-2 relative">
           <svg
             className="absolute left-3 top-3 w-5 h-5 text-gray-400"
@@ -140,7 +132,6 @@ const AdminUsers = () => {
 
 
 
-        {/* Role Filter */}
         <select
           value={filterRole}
           onChange={(e) => setFilterRole(e.target.value)}
@@ -154,7 +145,6 @@ const AdminUsers = () => {
 
 
 
-      {/* Results Info */}
       <div className="mb-4 text-sm text-gray-600">
         Showing <span className="font-semibold">{filteredUsers.length}</span> of{" "}
         <span className="font-semibold">{users.filter(u => u.role !== "ADMIN").length}</span> users
@@ -162,7 +152,6 @@ const AdminUsers = () => {
 
 
 
-      {/* Users Table */}
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead>
@@ -246,7 +235,6 @@ const AdminUsers = () => {
         </table>
       </div>
 
-      {/* Expanded Actions */}
       {expandedUserId && (
         <div className="mt-6 border-t pt-6">
           {(() => {
@@ -262,7 +250,6 @@ const AdminUsers = () => {
                 <div className="flex flex-wrap gap-3">
 
 
-                  {/* Block/Unblock Button */}
                   <button
                     onClick={() => handleBlockToggle(user._id, user.isBlocked)}
                     disabled={blockToggleMutation.isPending}
@@ -275,7 +262,6 @@ const AdminUsers = () => {
 
 
 
-                  {/* Delete Button */}
                   <button
                     onClick={() => handleDelete(user._id)}
                     disabled={userDeleteMutation.isPending}

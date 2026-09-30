@@ -19,13 +19,10 @@ const CourseLearn = () => {
   const { id } = useParams();
   const queryClient = useQueryClient()
 
-  // Get Enrollment status from Hook/useMyEnrollments
   const { enrollments, isLoading, error, } = useMyEnrollments()
 
-  // Find the specific enrollment matching this course ID 
   const currentEnrollment = enrollments.find(item => item.course === id || item.course?._id === id);
 
-  // Setup modificaton by mutation 
   const mutation = useMutation({
     mutationFn: () => markCourseComplete(id),
     onMutate: async () => {
@@ -70,7 +67,6 @@ const CourseLearn = () => {
 
 
 
-  // Checking Status 
   const isCompleted = currentEnrollment?.progress === 'COMPLETED';
   const isSaving = mutation.isPending;
 

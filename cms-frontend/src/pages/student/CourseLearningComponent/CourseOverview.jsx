@@ -29,7 +29,6 @@ const CourseOverview = () => {
 
       
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {/* Enrolled Date */}
         <div className="bg-[#111622] border border-slate-800/80 p-4 rounded-xl flex items-center gap-3.5">
           <div className="p-2.5 rounded-lg bg-indigo-500/10 text-indigo-400 shrink-0">
             <FiCalendar size={18} />

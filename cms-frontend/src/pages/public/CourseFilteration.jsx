@@ -20,10 +20,8 @@ const CourseFilteration = ({ filters, setfilters }) => {
     const  handCheckboxchange = (filterType, value) => {
         setfilters((prev) => {
 
-            // 1. Current array ko Set mein convert karo
             const updateset = new Set(prev[filterType] || [])
             
-            // 2. Agar value pehle se hai toh Delete (Uncheck), nahi toh Add (Check)
             if(updateset.has(value)){
                 updateset.delete(value)
             }else{
@@ -33,7 +31,7 @@ const CourseFilteration = ({ filters, setfilters }) => {
             return {
                 ...prev,
                 [filterType]:Array.from(updateset),
-                page:1 // Change prr filter reset on first page 
+                page:1
             }
         })
     }
@@ -51,7 +49,6 @@ const CourseFilteration = ({ filters, setfilters }) => {
     return (
         <div className="w-1/6 min-w-60 rounded-2xl border border-gray-700 bg-gray-900 p-5 text-white shadow-lg">
 
-            {/* Header */}
             <div className="mb-10 flex items-center justify-between  ">
                 <h1 className="text-lg font-semibold gap-2 flex items-center "> <MdFilterList size={20} /> Filters</h1>
 
@@ -62,7 +59,6 @@ const CourseFilteration = ({ filters, setfilters }) => {
 
             <div className="flex flex-col gap-7">
 
-                {/* Level */}
                 <div>
 
                     <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-gray-400">
@@ -87,10 +83,8 @@ const CourseFilteration = ({ filters, setfilters }) => {
                     </div>
                 </div>
 
-                {/* Divider */}
                 <div className="border-t border-gray-600" />
 
-                {/* Category */}
                 <div>
 
                     <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-gray-400">

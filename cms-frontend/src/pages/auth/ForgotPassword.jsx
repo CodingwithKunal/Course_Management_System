@@ -9,7 +9,6 @@ import { FiMail, FiArrowLeft, FiCheckCircle } from "react-icons/fi";
 export const ForgotPassword = () => {
     const [email, setEmail] = useState("");
 
-    // TanStack Query Mutation
     const { mutate, isPending, isSuccess, error } = useMutation({
         mutationFn: forgotpassword,
        
@@ -20,7 +19,6 @@ export const ForgotPassword = () => {
         e.preventDefault();
         if (!email) return;
 
-        // Trigger Mutation
         mutate({ email });
     };
     return (
@@ -43,7 +41,6 @@ export const ForgotPassword = () => {
                             </p>
                         </div>
 
-                        {/* Error Message from Mutation */}
                         {error && (
                             <div className="mb-4 p-3 bg-red-500/10 border border-red-500/50 rounded-lg text-red-400 text-sm">
                                 {error.response?.data?.message || "Something went wrong!"}
@@ -78,7 +75,6 @@ export const ForgotPassword = () => {
                         </form>
                     </>
                 ) : (
-                    /* Success Screen View */
                     <div className="text-center py-4 space-y-4">
                         <div className="w-14 h-14 bg-emerald-500/10 text-emerald-400 rounded-full flex items-center justify-center mx-auto text-3xl">
                             <FiCheckCircle />

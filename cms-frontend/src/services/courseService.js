@@ -4,7 +4,6 @@ import { toast } from "sonner";
 
 
 
-// Get all courses with pagination and search
 export const getAllCourses = async (params) => {
     try {
         const queryParams = {
@@ -23,7 +22,6 @@ export const getAllCourses = async (params) => {
 
 
 
-// Get course details by ID 
 export const getCourseDetails = async (coureseId) => {
     try {
         const res = await API.get(`/course/course-details/${coureseId}`)
@@ -51,7 +49,6 @@ export const enrollInCourse = async (courseId) => {
 }
 
 
-// Check if user is enrolled in a course
 export const checkCourseEnrollment = async (courseId) => {
     try {
         const res = await API.get(`/course/check-enrollment/${courseId}`)

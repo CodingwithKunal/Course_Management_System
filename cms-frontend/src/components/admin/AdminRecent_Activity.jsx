@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { FiCheckCircle, FiUploadCloud, FiStar } from 'react-icons/fi';
 
-// Relative timestamp formatter
 const formatTimeAgo = (dateString) => {
   if (!dateString) return '';
   const now = new Date();
@@ -16,7 +15,6 @@ const formatTimeAgo = (dateString) => {
   return `${diffInDays} day${diffInDays > 1 ? 's' : ''} ago`;
 };
 
-// Activity badge & icon picker
 const getActivityIcon = (type) => {
   switch (type) {
     case 'ENROLLMENT':
@@ -84,7 +82,6 @@ const RecentActivity = ({ activities = [], isLoading, isError }) => {
       <div>
         <h3 className="text-base font-bold text-slate-900 mb-5">Recent Activity</h3>
 
-        {/* Loading State Skeleton */}
         {isLoading && (
           <div className="space-y-4">
             {[1, 2, 3].map((i) => (
@@ -99,21 +96,18 @@ const RecentActivity = ({ activities = [], isLoading, isError }) => {
           </div>
         )}
 
-        {/* Error State */}
         {!isLoading && isError && (
           <div className="py-6 text-center text-xs text-red-500 bg-red-50 rounded-xl">
             Failed to load recent activity.
           </div>
         )}
 
-        {/* Empty State */}
         {!isLoading && !isError && visibleActivities.length === 0 && (
           <div className="py-6 text-center text-xs text-slate-400">
             No recent activity recorded yet.
           </div>
         )}
 
-        {/* Activity List */}
         {!isLoading && !isError && visibleActivities.length > 0 && (
 
           <div className="space-y-4 max-h-95 overflow-y-auto" ref={scrollContainerRef} onScroll={handleScroll}>
@@ -140,7 +134,6 @@ const RecentActivity = ({ activities = [], isLoading, isError }) => {
       </div>
 
       <div className="mt-4 pt-3 border-t border-slate-100">
-        {/* Logic: Agar user bottom tak scroll kar chuka hai OR total items <= 6 hain */}
         {(scrolltoBottom || visibleActivities.length <= 6) && visibleActivities.length > 0 ? (
           <button
             type="button"

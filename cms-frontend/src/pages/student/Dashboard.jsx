@@ -40,7 +40,6 @@ function Dashboard() {
             <h1 className="text-3xl font-bold mb-6 text-center">
                 My Learning Dashboard
             </h1>
-            {/* show the Statecards with Values */}
             <div className="flex justify-center items-center">
                 <div className=" mb-6  p-6 rounded-lg bg-white/30 w-9/10 backdrop-blur-3xl shadow-md">
                     <h3 className="font-bold text-xl mb-4">About Courses </h3>

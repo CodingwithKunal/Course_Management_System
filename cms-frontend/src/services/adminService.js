@@ -22,7 +22,6 @@ export const getTotalEnrolledStudent = async()=>{
     }  
 }
 
-// Get pending instructors
 export const getPendingInstructors = async () => {
     try {
         const res = await API.get("/admin/pending-instructors");
@@ -36,7 +35,6 @@ export const getPendingInstructors = async () => {
     }
 }
 
-// Approve instructor
 export const approveInstructor = async (instructorId) => {
     try {
         const res = await API.patch(`/admin/approve-instructor/${instructorId}`);
@@ -53,7 +51,6 @@ export const approveInstructor = async (instructorId) => {
     }
 }
 
-// Disapprove instructor
 export const disapproveInstructor = async (instructorId) => {
     try {
         const res = await API.patch(`/admin/disapprove-instructor/${instructorId}`);
@@ -99,7 +96,6 @@ export const rejectCourse = async(courseId,reason) => {
     }
 }
 
-// Publish course
 export const publishCourse = async (courseId) => {
     try {
         const res = await API.patch(`/admin/publish-course/${courseId}`);
@@ -116,7 +112,6 @@ export const publishCourse = async (courseId) => {
     }
 };
 
-// Unpublish course
 export const unpublishCourse = async (courseId) => {
     try {
         const res = await API.patch(`/admin/unpublish-course/${courseId}`);
@@ -133,7 +128,6 @@ export const unpublishCourse = async (courseId) => {
     }
 };
 
-// Block/Unblock user
 export const blockUnblockUser = async (userId) => {
     try {
         const res = await API.patch(`/admin/block-unblock-user/${userId}`);
@@ -150,7 +144,6 @@ export const blockUnblockUser = async (userId) => {
     }
 };
 
-// Delete user
 export const deleteUser = async (userId) => {
     try {
         const res = await API.delete(`/admin/delete-user/${userId}`);
@@ -167,7 +160,6 @@ export const deleteUser = async (userId) => {
     }
 };
 
-// Promote user to admin
 export const promoteToAdmin = async (userId) => {
     try {
         const res = await API.patch(`/admin/promote-admin/${userId}`);

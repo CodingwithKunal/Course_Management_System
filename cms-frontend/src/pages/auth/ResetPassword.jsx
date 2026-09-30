@@ -15,7 +15,6 @@ export const ResetPassword = () => {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
 
-    // TanStack Query Mutation
     const { mutate, isPending, isSuccess, error } = useMutation({
         mutationFn:  reset_password,
         onSuccess: (data) => {
@@ -37,7 +36,6 @@ export const ResetPassword = () => {
             return;
         }
 
-        // Trigger Reset Mutation
         mutate({ resetToken, newPassword });
     };
     return (

@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { jwtDecode } from "jwt-decode";
 
 const token = localStorage.getItem("token");
-let user = token ? jwtDecode(token) : null; // Decode token to get user Id and Role, if token exists
+let user = token ? jwtDecode(token) : null;
 
 
 const initialState = {

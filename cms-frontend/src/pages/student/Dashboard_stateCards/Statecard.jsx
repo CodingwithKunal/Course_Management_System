@@ -2,7 +2,6 @@ import React from 'react'
 
 const Statecard = ({title,value, color,icon}) => {
   return (
-    //creating card 
     <div className={`flex flex-col items-center justify-center p-4 rounded-lg shadow-md ${color} text-white w-1/6`}>
       <div className="text-2xl mb-2">
         {icon}

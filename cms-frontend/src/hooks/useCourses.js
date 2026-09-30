@@ -18,7 +18,6 @@ export const useCourses = () => {
         queryKey: ["courses", { ...filters, search: debouncedSearch }],
         queryFn: () => getAllCourses({ ...filters, search: debouncedSearch }),
 
-        // Naya data aane tak purana data screen par hold karke rakhega
         placeholderData: keepPreviousData,
     });
     return {

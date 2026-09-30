@@ -10,7 +10,6 @@ export const VerifyOtp = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
-    // Email passed from registration state
     const email = location.state?.email || "";
     const [otp, setOtp] = useState("");
 

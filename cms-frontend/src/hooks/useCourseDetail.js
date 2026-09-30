@@ -10,14 +10,13 @@ import { useSelector } from "react-redux"
     const { data, isLoading, error, refetch} = useQuery({
         queryKey: ["course-detail", courseId],
         queryFn: () => getCourseDetails(courseId),
-        enabled: !!courseId, // Only run query if courseId is available
+        enabled: !!courseId,
     })
 
-    // Check enrollment status only if user is authenticated
     const { data: enrollmentData, isLoading: enrollmentLoading } = useQuery({
         queryKey: ["enrollment-status", courseId],
         queryFn: () => checkCourseEnrollment(courseId),
-        enabled: !!courseId && isAuthenticated, // Only run if user is authenticated
+        enabled: !!courseId && isAuthenticated,
     })
 
     return {

@@ -37,13 +37,11 @@ const Rejected_courses = () => {
 
   return (
       <main className="w-full space-y-4 font-sans">
-      {/* Title Header */}
       <h2 className="text-xl font-bold text-white flex items-center gap-2">
         <span className="w-2.5 h-2.5 rounded-full bg-red-500 inline-block shadow-sm shadow-red-500/50"></span>
         Rejected Courses with Message
       </h2>
 
-      {/* Table Container */}
       <div className="w-full bg-[#111622] rounded-xl overflow-hidden border border-slate-800/80 shadow-2xl">
         {getRejectedCoures.length === 0 ? (
           <div className="p-8 text-center text-slate-400">No rejected courses found.</div>
@@ -66,39 +64,32 @@ const Rejected_courses = () => {
                     key={course._id || course.id} 
                     className="hover:bg-slate-800/20 transition-colors duration-150"
                   >
-                    {/* Course Title */}
                     <td className="py-5 px-6 font-bold text-white text-sm">
                       {course.title || 'Untitled Course'}
                     </td>
 
-                    {/* Price */}
                     <td className="py-5 px-6 text-slate-200 font-semibold">
                       ₹{course.price ?? '0'}
                     </td>
 
-                    {/* Level */}
                     <td className="py-5 px-6 text-slate-300 font-medium uppercase tracking-wider text-[11px]">
                       {course.level || 'ADVANCED'}
                     </td>
 
-                    {/* Status Badge */}
                     <td className="py-5 px-6">
                       <span className="inline-block px-2.5 py-1 text-[10px] font-extrabold text-red-500 bg-red-950/40 border border-red-900/60 rounded uppercase tracking-wider">
                         REJECTED
                       </span>
                     </td>
 
-                    {/* Rejection Reason Box */}
                     <td className="py-5 px-6">
                       <div className="bg-[#182032] border border-slate-800 px-4 py-2.5 rounded-lg text-xs italic text-slate-300 max-w-lg truncate">
                         "{course.rejectionReason || course.rejectionMessage || 'No specific rejection reason provided.'}"
                       </div>
                     </td>
 
-                    {/* Action Buttons */}
                     <td className="py-5 px-6">
                       <div className="flex items-center justify-end gap-2">
-                        {/* Edit & Resubmit Button */}
                         <button
                           onClick={() => navigate(`/instructor/resubmit-course/${course._id}`)}
                           className="flex items-center gap-1.5 px-3.5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-xs rounded-lg shadow-md transition-all active:scale-95"
@@ -107,7 +98,6 @@ const Rejected_courses = () => {
                           <span>Edit & Resubmit</span>
                         </button>
 
-                        {/* Delete Button */}
                         <button
                           onClick={() => deletAction(course._id) }  
                           title="Delete Course"

@@ -4,7 +4,6 @@ import { toast } from "sonner";
 const API = axios.create({
     baseURL:  import.meta.env.VIT_Backend_URL || "http://localhost:5000/api",
 })
-// Attach token automatically
    API.interceptors.request.use((req)=> {
     const token = localStorage.getItem("token");
     if(token) {
@@ -14,7 +13,6 @@ const API = axios.create({
     return req;
 })
 
-// Response interceptor to handle errors globally 
   API.interceptors.response.use((res) => res, (err) => {
     const status = err.response ? err.response.status : null;
 

@@ -58,7 +58,6 @@ function CourseDetail() {
     }
 
     const renderEnrollButton = () => {
-        // If not authenticated, show login prompt
         if (!isAuthenticated) {
             return (
                 <button 
@@ -70,7 +69,6 @@ function CourseDetail() {
             )
         }
 
-        // If already enrolled, show enrolled status
         if (isEnrolled) {
             return (
                 <button 
@@ -82,7 +80,6 @@ function CourseDetail() {
             )
         }
 
-        // If not enrolled, show enroll/buy button
         return (
             <button 
                 onClick={handle_Enroll} 

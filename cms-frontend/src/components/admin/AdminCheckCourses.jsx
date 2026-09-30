@@ -21,7 +21,6 @@ const AdminCheckCourses = () => {
   };
 
 
-  // Fetch pending courses
   useEffect(() => {
     const timerId = window.setTimeout(() => {
       fetchCourses();
@@ -32,7 +31,6 @@ const AdminCheckCourses = () => {
 
 
 
-  // Filter courses
   const filteredCourses = courses.filter((course) => {
     const matchesSearch =
       course.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -43,7 +41,6 @@ const AdminCheckCourses = () => {
 
 
 
-  // Handle publish course
   const handlePublish = async (courseId) => {
     setActionLoading((prev) => ({ ...prev, [`publish_${courseId}`]: true }));
     const result = await publishCourse(courseId);
@@ -59,7 +56,6 @@ const AdminCheckCourses = () => {
 
 
 
-  // Handle unpublish course
   const handleUnpublish = async (courseId) => {
     if (!window.confirm("Unpublish this course? It will no longer be available to students.")) {
       return;
@@ -78,7 +74,6 @@ const AdminCheckCourses = () => {
 
 
 
-  // Handle reject course
   const rejectMutation = useMutation({
     mutationFn: ({ courseId, rejectReason}) => rejectCourse(courseId, rejectReason),
      onSuccess: () => {
@@ -106,7 +101,6 @@ const AdminCheckCourses = () => {
 
 
 
-  // Loading state
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
@@ -117,7 +111,6 @@ const AdminCheckCourses = () => {
 
 
 
-  // Empty state
   if (courses.length === 0) {
     return (
       <div className="text-center py-12">
@@ -131,7 +124,6 @@ const AdminCheckCourses = () => {
 
   return (
     <div className="rounded-lg shadow-sm border border-gray-200 p-6">
-      {/* Header */}
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-gray-900 mb-2">Course Management</h2>
         <p className="text-gray-600">
@@ -139,9 +131,7 @@ const AdminCheckCourses = () => {
         </p>
       </div>
 
-      {/* Search and Filters */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        {/* Search Bar */}
         <div className="md:col-span-2 relative">
           <svg
             className="absolute left-3 top-3 w-5 h-5 text-gray-400"
@@ -166,7 +156,6 @@ const AdminCheckCourses = () => {
           />
         </div>
 
-        {/* Status Filter */}
         <select
           value={filterStatus}
           onChange={(e) => setFilterStatus(e.target.value)}
@@ -179,13 +168,11 @@ const AdminCheckCourses = () => {
         </select>
       </div>
 
-      {/* Results Info */}
       <div className="mb-4 text-sm text-gray-600">
         Showing <span className="font-semibold">{filteredCourses.length}</span> of{" "}
         <span className="font-semibold">{courses.length}</span> courses
       </div>
 
-      {/* Courses Grid */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {filteredCourses.length > 0 ? (
           filteredCourses.map((course) => (
@@ -193,7 +180,6 @@ const AdminCheckCourses = () => {
               key={course._id}
               className="bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-lg transition"
             >
-              {/* Course Thumbnail */}
               <div className="relative w-full h-40 bg-gray-200 overflow-hidden">
                 {course.thumbnail ? (
                   <img
@@ -237,11 +223,9 @@ const AdminCheckCourses = () => {
                 </div>
               </div>
 
-              {/* Course Details */}
               <div className="p-4">
                 <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2">{course.title}</h3>
 
-                {/* Course Info */}
                 <div className="space-y-2 mb-4 text-sm">
                   <div className="flex items-center text-gray-600">
                     <svg
@@ -318,7 +302,6 @@ const AdminCheckCourses = () => {
                   )}
                 </div>
 
-                {/* Show rejection reason if rejected */}
                 {course.status === "REJECTED" && course.rejectionReason && (
                   <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded">
                     <p className="text-xs font-semibold text-red-800 mb-1">Rejection Reason:</p>
@@ -326,7 +309,6 @@ const AdminCheckCourses = () => {
                   </div>
                 )}
 
-                {/* Action Button */}
                 <button
                   onClick={() =>
                     setExpandedCourseId(expandedCourseId === course._id ? null : course._id)
@@ -352,7 +334,6 @@ const AdminCheckCourses = () => {
                   </svg>
                 </button>
 
-                {/* Expanded Actions */}
                 {expandedCourseId === course._id && (
                   <div className="mt-4 pt-4 border-t border-gray-200 space-y-2">
                     {course.status !== "PUBLISHED" && (
@@ -455,7 +436,6 @@ const AdminCheckCourses = () => {
         )}
       </div>
 
-      {/* Reject Modal */}
       {showRejectModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg shadow-xl max-w-md w-full mx-4 p-6">

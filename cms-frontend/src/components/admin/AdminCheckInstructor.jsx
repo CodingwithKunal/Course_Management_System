@@ -10,7 +10,6 @@ const AdminCheckInstructor = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("ALL");
 
-  // Fetch pending instructors
   useEffect(() => {
     fetchInstructors();
   }, []);
@@ -24,7 +23,6 @@ const AdminCheckInstructor = () => {
     setLoading(false);
   };
 
-  // Filter instructors
   const filteredInstructors = instructors.filter((instructor) => {
     const matchesSearch =
       instructor.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -36,7 +34,6 @@ const AdminCheckInstructor = () => {
     return matchesSearch && matchesStatus;
   });
 
-  // Handle approve instructor
   const handleApprove = async (instructorId) => {
     setActionLoading((prev) => ({ ...prev, [`approve_${instructorId}`]: true }));
     const result = await approveInstructor(instructorId);
@@ -50,7 +47,6 @@ const AdminCheckInstructor = () => {
     }
   };
 
-  // Handle disapprove instructor
   const handleDisapprove = async (instructorId) => {
     if (!window.confirm("Are you sure you want to disapprove this instructor?")) {
       return;
@@ -67,7 +63,6 @@ const AdminCheckInstructor = () => {
     }
   };
 
-  // Loading state
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
@@ -76,7 +71,6 @@ const AdminCheckInstructor = () => {
     );
   }
 
-  // Empty state
   if (instructors.length === 0) {
     return (
       <div className="text-center py-12">
@@ -87,7 +81,6 @@ const AdminCheckInstructor = () => {
 
   return (
     <div className="rounded-lg shadow-sm border border-gray-200 p-6">
-      {/* Header */}
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-gray-900 mb-2">Instructor Management</h2>
         <p className="text-gray-600">
@@ -95,9 +88,7 @@ const AdminCheckInstructor = () => {
         </p>
       </div>
 
-      {/* Search and Filters */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        {/* Search Bar */}
         <div className="md:col-span-2 relative">
           <svg
             className="absolute left-3 top-3 w-5 h-5 text-gray-400"
@@ -122,7 +113,6 @@ const AdminCheckInstructor = () => {
           />
         </div>
 
-        {/* Status Filter */}
         <select
           value={filterStatus}
           onChange={(e) => setFilterStatus(e.target.value)}
@@ -134,13 +124,11 @@ const AdminCheckInstructor = () => {
         </select>
       </div>
 
-      {/* Results Info */}
       <div className="mb-4 text-sm text-gray-600">
         Showing <span className="font-semibold">{filteredInstructors.length}</span> of{" "}
         <span className="font-semibold">{instructors.length}</span> instructors
       </div>
 
-      {/* Instructors Grid */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {filteredInstructors.length > 0 ? (
           filteredInstructors.map((instructor) => (
@@ -148,11 +136,9 @@ const AdminCheckInstructor = () => {
               key={instructor._id}
               className="bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-lg transition"
             >
-              {/* Header with status badge */}
               <div className="bg-gradient-to-r from-blue-500 to-blue-600 px-4 py-6 relative">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
-                    {/* Avatar */}
                     <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center font-bold text-blue-600 text-lg">
                       {instructor.name?.charAt(0).toUpperCase()}
                     </div>
@@ -175,9 +161,7 @@ const AdminCheckInstructor = () => {
                 </div>
               </div>
 
-              {/* Instructor Details */}
               <div className="p-4">
-                {/* Role */}
                 <div className="mb-4 pb-4 border-b border-gray-200">
                   <p className="text-xs text-gray-500 font-semibold mb-1">ROLE</p>
                   <p className="text-gray-900 font-semibold flex items-center gap-2">
@@ -199,9 +183,7 @@ const AdminCheckInstructor = () => {
                   </p>
                 </div>
 
-                {/* Instructor Info */}
                 <div className="space-y-3 mb-4">
-                  {/* Bio */}
                   <div>
                     <p className="text-xs text-gray-500 font-semibold mb-1">BIO</p>
                     <p className="text-sm text-gray-700 line-clamp-2">
@@ -209,7 +191,6 @@ const AdminCheckInstructor = () => {
                     </p>
                   </div>
 
-                  {/* Expertise */}
                   <div>
                     <p className="text-xs text-gray-500 font-semibold mb-1">EXPERTISE</p>
                     <p className="text-sm text-gray-700">
@@ -217,7 +198,6 @@ const AdminCheckInstructor = () => {
                     </p>
                   </div>
 
-                  {/* Experience */}
                   <div>
                     <p className="text-xs text-gray-500 font-semibold mb-1">EXPERIENCE</p>
                     <p className="text-sm text-gray-700">
@@ -226,7 +206,6 @@ const AdminCheckInstructor = () => {
                   </div>
                 </div>
 
-                {/* Action Button */}
                 <button
                   onClick={() =>
                     setExpandedInstructorId(
@@ -254,7 +233,6 @@ const AdminCheckInstructor = () => {
                   </svg>
                 </button>
 
-                {/* Expanded Actions */}
                 {expandedInstructorId === instructor._id && (
                   <div className="mt-4 pt-4 border-t border-gray-200 space-y-2">
                     {!instructor.instructor?.isApproved && (

@@ -6,7 +6,7 @@ function useMyEnrollments() {
     const { data, error, isLoading, refetch} = useQuery({
         queryKey: ["my-enrollments"],
         queryFn: getMyEnrollments,
-        enabled: true, // Enable automatic fetching on component mount
+        enabled: true,
     })
    return {
        enrollments : data?.data?.enrollments || [],

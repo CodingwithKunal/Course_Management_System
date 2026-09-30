@@ -17,7 +17,6 @@ export const Register = () => {
             <section className=' flex items-center justify-center   w-1/2 max-h-10/12 bg-mist-200'>
                 <div className="flex flex-col items-center text-black space-x-5 text-xs">
                     <div className='flex space-x-3 py-4'>
-                        {/* Student Radio Button Card */}
                         <label
                             htmlFor="student-radio"
                             className={`py-2 px-3 cursor-pointer rounded-xl border flex items-center space-x-4 transition-all ${showe === "student"
@@ -29,7 +28,7 @@ export const Register = () => {
                             <input
                                 type="radio"
                                 id="student-radio"
-                                name="userRole" // Same name links both radio buttons together
+                                name="userRole"
                                 value="student"
                                 checked={showe === "student"}
                                 onChange={(e) => setshowe(e.target.value)}
@@ -37,7 +36,6 @@ export const Register = () => {
                             />
                         </label>
 
-                        {/* Instructor Radio Button Card */}
                         <label
                             htmlFor="instructor-radio"
                             className={`py-2 px-3 cursor-pointer rounded-xl border flex items-center space-x-4 transition-all ${showe === "instructor"
@@ -49,7 +47,7 @@ export const Register = () => {
                             <input
                                 type="radio"
                                 id="instructor-radio"
-                                name="userRole" // Same name links both radio buttons together
+                                name="userRole"
                                 value="instructor"
                                 checked={showe === "instructor"}
                                 onChange={(e) => setshowe(e.target.value)}
